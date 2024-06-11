@@ -2,8 +2,8 @@
 
 <p align='center' style="margin-bottom: -4px">Cleyber Bezerra dos Reis<sup>1</sup>, Antonio Oliveira-JR<sup>1</sup></p>
 <p align='center' style="margin-bottom: -4px"><sup>1</sup>Instituto de Informática, Universidade Federal de Goiás</p>
-<p align='center'>E-mail: {antonio}@inf.ufg.br</p>
 <p align='center' style="margin-bottom: -4px">E-mail: {cleyber.bezerra}@discente.ufg.br</p>
+<p align='center'>E-mail: {antonio}@inf.ufg.br</p>
 
 # Table of Contents
 - [Article Summary](#getting-started)
