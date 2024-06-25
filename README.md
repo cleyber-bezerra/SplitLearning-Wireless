@@ -142,7 +142,7 @@ Then, compile the source code from the ns-3 `scratch` files.
 > The name of the generated file will follow the pattern `simulator_ns3.csv`, and will be located in the internal path results/csv/ns3.
 
 ```bash
-pip install numpy pandas toch tochvision matplotlib 
+pip install numpy pandas toch tochvision matplotlib tqdm
 ```
 
 We can then begin the process of training and testing the machine learning model.
@@ -156,7 +156,7 @@ a. Carry out training and testing in the `synchronous` environment.
 
 ```bash
 cd SplitLearning-Async-NS3
-python server_overhead_mnist.py {ASYNC=0}
+python server_overhead_mnist.py
 ```
 > The name of the generated file will follow the pattern `result_train_sync.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
@@ -164,7 +164,7 @@ python server_overhead_mnist.py {ASYNC=0}
 b. Carry out training and testing in the `asynchronous` environment.
 
 ```bash
-python server_overhead_mnist.py {ASYNC=1}
+python server_overhead_mnist.py --ASYNC=1
 ```
 > The name of the generated file will follow the pattern `result_train_async.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
