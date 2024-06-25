@@ -9,14 +9,14 @@
 - [Article Summary](#getting-started)
 	- [Abstract](#abstract)
 	- [Baselines](#baselines)
-	- [Proposed Synchronization Algorithm (Async)](#proposed-synchronization-algorithm)
+	- [Proposed Synchronization Algorithm](#proposed-synchronization-algorithm)
 	- [Results](#results)
 - [Replicating the Experiment](#replicating-the-experiment)
 	- [Requirements](#requirements)
 	- [Preparing Environment](#preparing-environment)
  		- [Simulations](#simulations)
  	- [Run Experiments](#run-experiments)
-  		- [Trains and Tests](#trains-tests)     
+  		- [Trains and Tests](#trains-and-tests)     
   		
 
 - [How to cite](#how-to-cite)
@@ -33,7 +33,7 @@ In this integrated scenario, network experiments are simulated with distance var
 
 T
 
-## Proposed Synchronization Algorithm (Async)
+## Proposed Synchronization Algorithm
 
 T
 
