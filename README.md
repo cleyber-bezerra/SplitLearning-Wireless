@@ -16,8 +16,7 @@
 	- [Preparing Environment](#preparing-environment)
  		- [Simulations](#simulations)
  	- [Run Experiments](#run-experiments)
-  		- [Trains and Tests](#trains-tests)
-  		- [Optimization Model](#optimization-model)      
+  		- [Trains and Tests](#trains-tests)     
   		
 
 - [How to cite](#how-to-cite)
