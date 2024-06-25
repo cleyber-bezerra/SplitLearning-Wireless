@@ -9,7 +9,7 @@
 - [Article Summary](#getting-started)
 	- [Abstract](#abstract)
 	- [Baselines](#baselines)
-	- [Proposed placement algorithm (Async)](#proposed-placement-algorithm)
+	- [Proposed Synchronization Algorithm (Async)](#proposed-synchronization-algorithm)
 	- [Results](#results)
 - [Replicating the Experiment](#replicating-the-experiment)
 	- [Requirements](#requirements)
@@ -34,7 +34,7 @@ In this integrated scenario, network experiments are simulated with distance var
 
 T
 
-## Proposed placement algorithm (Async)
+## Proposed Synchronization Algorithm (Async)
 
 T
 
