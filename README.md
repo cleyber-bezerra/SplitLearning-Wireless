@@ -84,7 +84,7 @@ Then, compile the source code from the ns-3 `scratch` files.
 ./ns3 run scratch/SL/my_wifi_ap_net_rand.cc {{{ --nDevices=30 --seed=1 --nGateways=4 }}}
 ```
 
-The following Python packages are needed to execute the experiment.
+> The name of the generated file will follow the pattern `simulator_ns3.csv`, and will be located in the internal path results/csv/ns3.
 
 ```bash
 pip install numpy pandas toch tochvision matplotlib 
@@ -99,16 +99,18 @@ a. Gene.
 
 ```bash
 cd SplitLearning-Async-NS3
-python server_overhead_mnist.py
+python server_overhead_mnist.py {ASYNC=0}
 ```
-> The name of the generated file will follow the pattern `simulator_ns3.csv`, and will be located in the internal path results/csv/ns3.
+> The name of the generated file will follow the pattern `result_train_sync.csv`, and will be located in the internal path results/csv/ia.
+> The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
 
 b. Gene.
 
 ```bash
-python server_open_filter_mnist.py
+python server_overhead_mnist.py {ASYNC=1}
 ```
-> The generated file names will follow the pattern `endDevices_LNM_Placement_1s+30d.dat`, where `1s` and `30d` follow the adopted parameters for seed and devices.
+> The name of the generated file will follow the pattern `result_train_async.csv`, and will be located in the internal path results/csv/ia.
+> The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
 
 c. Gene.
 ```bash
