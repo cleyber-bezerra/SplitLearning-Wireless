@@ -138,7 +138,7 @@ The first step is to build the `ns-3.42` of NS3.
 Then, compile the source code from the ns-3 `scratch` files.
 
 ```bash
-./ns3 run scratch/SL/my_wifi_ap_net_rand.cc {{{ --nDevices=30 --seed=1 --nGateways=4 }}}
+./ns3 run scratch/SplitLearning-Async-NS3/my_wifi_ap_net_rand.cc
 ```
 
 > The name of the generated file will follow the pattern `simulator_ns3.csv`, and will be located in the internal path results/csv/ns3.
