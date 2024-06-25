@@ -23,7 +23,12 @@
 
 ## Abstract
 
-In this work, 
+Split Learning (SL) is a promising approach as an effective solution to data security and privacy concerns in training Deep Neural Networks (DNN), due to its approach characteristics of combining raw data security and the division of the model between client devices and central server.
+Providing to minimize the risks of leaks and attacks, while keeping deep neural network training viable on devices with limited edge capabilities.
+However, this split model allows for an increase in the communication flow between edge devices (distributed) and the server (aggregator), leaving an open question about communication overhead.
+This dissertation covers the inference of the communication overload problem. Through a case study of offline integration with distributed learning of Split Learning by training a convolutional neural network (Convolutional Neural Network - CNN) and MNIST dataset. And the NS3 simulator, with characteristics of a Wi-Fi network environment with IoT device nodes and an Access Point.
+In this integrated scenario, network experiments are simulated with distance variations of 10, 50 and 100 mt, powers of 10, 30 and 50 dBm and loss exponents of 2, 3 and 4 dB. Based on the network output results, with regard to latency, a policy was defined that values ​​above 4 seconds are considered timeouts and are not included in machine learning experiments. As well, training and testing was carried out on the split learning model, observing the impacts on accuracies and loss rates.
+The results demonstrate the presentation of latencies, transfer rates, packet loss rates and energy consumption...
 
 ## Baselines
 Two
@@ -57,14 +62,7 @@ The
 Fig. 1 shows the area for UAV placement in a scenario with 60 EDs. Colored symbols represent UAVs for each placement method, and black circles represent devices.
 
 ### Number of UAV needed to serve the devices, ensuring the QoS level. 
-<p align='center'> <img src="/images/UAVsXDevices.png" width="500"> </p>
-<p align='center'>
-    <figurecaption>
-        Fig. 2. Devices serviced and number of UAVs required.
-    </figurecaption>
-</p>
 
-Figure 2
 
 ### QoS
 <p align='center'> <img src="/images/Heatmap_QoS.png" width="700"></p>
