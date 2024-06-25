@@ -48,31 +48,6 @@ The OP algorithm presents our approach for positioning UAVs-based gateways follo
 ## Results
 The 
 
-### UAVs placement
-
-<p align='center'>
-    <img src='/images/UAVs_Placements.png' width='500'>
-</p>    
-<p align='center'>
-    <figurecaption>
-        Fig. 1. UAV placement.
-    </figurecaption>
-</p>
-
-Fig. 1 shows the area for UAV placement in a scenario with 60 EDs. Colored symbols represent UAVs for each placement method, and black circles represent devices.
-
-### Number of UAV needed to serve the devices, ensuring the QoS level. 
-
-
-### QoS
-<p align='center'> <img src="/images/Heatmap_QoS.png" width="700"></p>
-<p align='center'>
-    <figurecaption>
-        Fig. 3. QoS.
-    </figurecaption>
-</p>
-
-Figure 3
 [Back to TOC](#table-of-contents)
 
 # Replicating The Experiment
@@ -88,10 +63,10 @@ Figure 3
 
 ## Preparing Environment
 
-Start by cloning this repository.
+Start by cloning this repository into the NS3 scracth folder.
 
 ```bash
-git clone https://github.com/LABORA-INF-UFG/non3GPP_IoT_simulations.git iot-sim
+git clone https://github.com/LABORA-INF-UFG/non3GPP_IoT_simulations.git
 cd iot-sim
 ```
 
@@ -110,19 +85,14 @@ cp -r ../scratch/* ./scratch
 ```
 Then, compile the source code from the ns-3 scratch files. The error messages presented at this step occur because we have not yet sent the appropriate execution parameters; ignore them.
 
-```
-./ns3 run scratch/ed-do-placement.cc
-./ns3 run scratch/gw-do-placement.cc
-./ns3 run scratch/op-prepare.cc
-./ns3 run scratch/do-experiment.cc
-./ns3 run scratch/eq-experiment.cc
-./ns3 run scratch/op-experiment.cc
+```bash
+./ns3 run scratch/SL/my_wifi_ap_net_rand.cc
 ```
 
 The following Python packages are needed to execute the experiment.
 
 ```bash
-pip install pyomo pandas matplotlib blob
+pip install numpy pandas toch tochvision matplotlib 
 ```
 
 We can then start the experimentation process; after every step, you can check the generated files inside [data/](data/) folder.
