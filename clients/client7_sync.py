@@ -291,7 +291,7 @@ def train():
 import csv
 
 def write_to_csv(train_loss_list, train_acc_list, val_loss_list, val_acc_list, p_time_list, comm_time, comm_data_size):
-    file = './results/csv/ia/result_train.csv'
+    file = './results/csv/ia/result_train_sync.csv'
     f = open(file, 'a', newline='')
     csv_writer = csv.writer(f)
 
