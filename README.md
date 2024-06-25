@@ -95,7 +95,7 @@ class AsynchronousSplitLearning:
 ## Results
 The results demonstrate the presentation of latencies, transfer rates, packet loss rates and energy consumption.
 
-<img src="/results/img/net_graficos_simulador_ns3.png" width="500">
+<img src="/results/img/net_graficos_simulador_ns3.png" width="600">
 Figure 1
 
 [Back to TOC](#table-of-contents)
