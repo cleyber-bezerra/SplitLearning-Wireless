@@ -34,20 +34,20 @@ In this integrated scenario, network experiments are simulated with distance var
 ## Baselines
 Two
 
-## Results
-The results demonstrate the presentation of latencies, transfer rates, packet loss rates and energy consumption...
-
-### {Eq}
-EQ  area $\mathcal{A}_{(MxN)}$ and the lower bound QoS  to be reached. The algorithm iterates by incrementing the number of UAVs to find how many satisfy the $QoS_{bound}$.
-### {Density-oriented UAVs placement algorithm (DO)}
-DO  of EDs $\beta_{(MxN)}$. Initially, the area density information is calculated, then $\beta_{(MxN)}$ is linearized, sorted in descending order, and assigned to $\rho_{(L)}$. The algorithm iterates until it reaches the target bound $QoS_{bound}$. In each iteration, a new UAV is added and placed in the corresponding position $\rho{(l)}$ of a matrix of $\alpha_{(m,n)}$, where $l$ represents the linear index that corresponds to a $(m,n)$. The DO outputs a UAV placement map $\alpha_{(m,n)}$.
-
 ## Proposed placement algorithm (Async)
 
 <img src="/images/OP_Algorithm.png" width="500">
 Figure 1:L...
 
 The OP algorithm presents
+### {Eq}
+EQ  area $\mathcal{A}_{(MxN)}$ and the lower bound QoS  to be reached. The algorithm iterates by incrementing the number of UAVs to find how many satisfy the $QoS_{bound}$.
+### {Density-oriented UAVs placement algorithm (DO)}
+DO  of EDs $\beta_{(MxN)}$. 
+
+## Results
+The results demonstrate the presentation of latencies, transfer rates, packet loss rates and energy consumption...
+<img src="/images/OP_Algorithm.png" width="500">
 
 [Back to TOC](#table-of-contents)
 
