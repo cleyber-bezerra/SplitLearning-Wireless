@@ -16,7 +16,7 @@
 	- [Preparing Environment](#preparing-environment)
  		- [Simulations](#simulations)
  	- [Run Experiments](#run-experiments)
-  		- [Generating Input Data](#generating-input-data)
+  		- [Trains and Tests](#trains-tests)
   		- [Optimization Model](#optimization-model)      
   		
 
@@ -45,9 +45,9 @@ DO  of EDs $\beta_{(MxN)}$. Initially, the area density information is calculate
 ## Proposed placement algorithm (Async)
 
 <img src="/images/OP_Algorithm.png" width="500">
+Figure 1:L...
 
-The OP algorithm presents our approach for positioning UAVs-based gateways following the optimization model in section 2. The algorithm receives as input the area for positioning devices ($\mathcal{A}_{(MxN)}$), the UAV placement area ($\mathcal{V}_{(XxYxZ)}$), and the expected QoS limit ($\rho^{QoS}_l$). In line 1, the devices are distributed following a realistic spatial distribution (here).tions set $\mathcal{P}$, the SF (spreading factor) and TP (transmission power) configurations set $\mathcal{C}$, and the slices associations set $\mathcal{S}$. Finally, the resulting data are modeled in the NS-3, and the simulation is performed.
-[Back to TOC](#table-of-contents)
+The OP algorithm presents
 
 [Back to TOC](#table-of-contents)
 
@@ -112,25 +112,6 @@ python server_overhead_mnist.py {ASYNC=1}
 > The name of the generated file will follow the pattern `result_train_async.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
 
-c. Gene.
-```bash
-./server_open_filter_mnist.py 
-```
-> The
-
-[Back to TOC](#table-of-contents)
-
-
-
-This  
-
-```bash
-./ns-3/build/scratch/ns3.36-eq-experiment-debug --nDevices=30 --seed=1 --nGateways=25
-./ns-3/build/scratch/ns3.36-do-experiment-debug --nDevices=30 --seed=1 --nGateways=25
-./ns-3/build/scratch/ns3.36-op-experiment-debug --nDevices=30 --seed=1 --nGateways=25
-```
-
-The simulation output can be found in the directory [./data/results/](./data/results/). 
 [Back to TOC](#table-of-contents)
 
 ## How to cite
