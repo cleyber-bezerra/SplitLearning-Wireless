@@ -57,7 +57,7 @@ The OP algorithm presents
 
 - GNU (>=8.0.0)
 - CMAKE (>=3.24)
-- python (3.11.4)
+- python (>=3.11.5)
 - ns-allinone (3.42)
   
 [Back to TOC](#table-of-contents)
