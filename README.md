@@ -29,9 +29,13 @@ However, this split model allows for an increase in the communication flow betwe
 This dissertation covers the inference of the communication overload problem. Through a case study of offline integration with distributed learning of Split Learning by training a convolutional neural network (Convolutional Neural Network - CNN) and MNIST dataset. And the NS3 simulator, with characteristics of a Wi-Fi network environment with IoT device nodes and an Access Point.
 In this integrated scenario, network experiments are simulated with distance variations of 10, 50 and 100 mt, powers of 10, 30 and 50 dBm and loss exponents of 2, 3 and 4 dB. Based on the network output results, with regard to latency, a policy was defined that values ​​above 4 seconds are considered timeouts and are not included in machine learning experiments. As well, training and testing was carried out on the split learning model, observing the impacts on accuracies and loss rates.
 
+[Back to TOC](#table-of-contents)
+
 ## Baselines
 
 T
+
+[Back to TOC](#table-of-contents)
 
 ## Proposed Synchronization Algorithm
 
@@ -90,6 +94,7 @@ class AsynchronousSplitLearning:
             self.state = self.update_state(total_loss)
 
 ```
+[Back to TOC](#table-of-contents)
 
 ## Results
 The results demonstrate the presentation of latencies, transfer rates, packet loss rates and energy consumption.
@@ -124,6 +129,8 @@ The first step is to build the `ns-3.42` of NS3.
 ./ns3 configure --enable-examples
 ./ns3 build
 ```
+[Back to TOC](#table-of-contents)
+
 ### Simulations
 
 Then, compile the source code from the ns-3 `scratch` files.
@@ -139,6 +146,8 @@ pip install numpy pandas toch tochvision matplotlib
 ```
 
 We can then begin the process of training and testing the machine learning model.
+
+[Back to TOC](#table-of-contents)
 
 ## Run Experiments
 ### Trains and Tests
