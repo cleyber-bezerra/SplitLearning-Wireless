@@ -32,11 +32,11 @@ In this integrated scenario, network experiments are simulated with distance var
 
 ## Baselines
 
-Two
+T
 
 ## Proposed placement algorithm (Async)
 
-The 
+T
 
 ```python
 class AsynchronousSplitLearning:
