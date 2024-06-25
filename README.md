@@ -14,10 +14,11 @@
 - [Replicating the Experiment](#replicating-the-experiment)
 	- [Requirements](#requirements)
 	- [Preparing Environment](#preparing-environment)
+ 		- [Simulations](#simulations)
  	- [Run Experiments](#run-experiments)
   		- [Generating Input Data](#generating-input-data)
   		- [Optimization Model](#optimization-model)      
-  		- [Simulations](#simulations)
+  		
 
 - [How to cite](#how-to-cite)
 
@@ -57,36 +58,30 @@ The
 - GNU (>=8.0.0)
 - CMAKE (>=3.24)
 - python (3.11.4)
-- [SCIP Optimization Suite (8.0.3)](https://scipopt.org/index.php#download)
+- ns-allinone-3.42
   
 [Back to TOC](#table-of-contents)
 
 ## Preparing Environment
 
-Start by cloning this repository into the NS3 scracth folder.
+Start by cloning this repository into the NS3 `scracth` folder.
 
 ```bash
-git clone https://github.com/LABORA-INF-UFG/non3GPP_IoT_simulations.git
-cd iot-sim
+git clone https://github.com/cleyber-bezerra/SplitLearning-Async-NS3.git
 ```
 
-The first step is to build the version 3.36 of NS3.
+The first step is to build the ns-3.42 of NS3.
 
 ```bash
-git clone https://github.com/nsnam/ns-3-dev-git ns-3
-cd ns-3
-git checkout ns-3.36
-
-cp -r ../contrib/* ./contrib
-cp -r ../scratch/* ./scratch
-
 ./ns3 configure --enable-examples
 ./ns3 build
 ```
-Then, compile the source code from the ns-3 scratch files. The error messages presented at this step occur because we have not yet sent the appropriate execution parameters; ignore them.
+### Simulations
+
+Then, compile the source code from the ns-3 `scratch` files.
 
 ```bash
-./ns3 run scratch/SL/my_wifi_ap_net_rand.cc
+./ns3 run scratch/SL/my_wifi_ap_net_rand.cc {{{ --nDevices=30 --seed=1 --nGateways=4 }}}
 ```
 
 The following Python packages are needed to execute the experiment.
@@ -95,51 +90,35 @@ The following Python packages are needed to execute the experiment.
 pip install numpy pandas toch tochvision matplotlib 
 ```
 
-We can then start the experimentation process; after every step, you can check the generated files inside [data/](data/) folder.
+We can then begin the process of training and testing the machine learning model.
 
-## Run Experiments
+## Run Experiments (trains)
 ### Generating Input Data
 
-a. Generate the files with the virtual positions for UAV placement. You must configure the `verbose` parameter.
+a. Gene.
 
 ```bash
-cd iot-sim
-python eq-placement.py 1
+cd SplitLearning-Async-NS3
+python server_overhead_mnist.py
 ```
 > The generated file names will follow the pattern `equidistantPlacement_xx.dat`, where `xx` is the number of virtual positions for UAV deployment.
 
-b. Generate the files with LoRa-ED positions using the NS3 script; you can modify the number of devices with the option `--nDevices=x` and the seed for the pseudo-random distribution of the devices with the option `--seed=y`.
+b. Gene.
 
 ```bash
-./ns-3/build/scratch/ns3.36-ed-do-placement-debug --nDevices=30 --seed=1
+python server_open_filter_mnist.py
 ```
 > The generated file names will follow the pattern `endDevices_LNM_Placement_1s+30d.dat`, where `1s` and `30d` follow the adopted parameters for seed and devices.
 
-c. Generate the files with UAV positions to the baseline Density-Oriented UAVs experiment.
+c. Gene.
 ```bash
-./ns-3/build/scratch/ns3.36-gw-do-placement-debug --nDevices=30 --seed=1 --nGateways=4
+./server_open_filter_mnist.py 
 ```
-> The generated file names will follow the pattern `densityOrientedPlacement_1s+30d+4g.dat`, where `1s`, `30d` and `4d` follow the adopted parameters for seed, devices and gateways(UAVs).
+> The
 
-d. To finalize this step, generate the files with slice association of the devices and other optimization model input parameters.
-
-```bash
-./ns-3/build/scratch/ns3.36-op-prepare-debug --nDevices=30 --nGateways=25 --seed=1 --nPlanes=1
-```
-> The files containing the input settings for the optimization model are generated in the [./data/model/](./data/model/) folder.
 [Back to TOC](#table-of-contents)
 
-### Optimization Model
 
-To . 
-
-```bash
-cd iot-sim
-python model.py 25 1 30 1 0.9
-```
-[Back to TOC](#table-of-contents)
-
-### Simulations
 
 This  
 
