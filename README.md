@@ -119,7 +119,7 @@ Start by cloning this repository into the NS3 `scracth` folder.
 git clone https://github.com/cleyber-bezerra/SplitLearning-Async-NS3.git
 ```
 
-The first step is to build the ns-3.42 of NS3.
+The first step is to build the `ns-3.42` of NS3.
 
 ```bash
 ./ns3 configure --enable-examples
