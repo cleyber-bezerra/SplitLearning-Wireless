@@ -95,7 +95,7 @@ We can then begin the process of training and testing the machine learning model
 ## Run Experiments
 ### Trains and Tests
 
-a. Gene.
+a. Carry out training and testing in the asynchronous environment.
 
 ```bash
 cd SplitLearning-Async-NS3
@@ -104,13 +104,15 @@ python server_overhead_mnist.py {ASYNC=0}
 > The name of the generated file will follow the pattern `result_train_sync.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
 
-b. Gene.
+b. Carry out training and testing in the asynchronous environment.
 
 ```bash
 python server_overhead_mnist.py {ASYNC=1}
 ```
 > The name of the generated file will follow the pattern `result_train_async.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
+
+Note: training and testing in both synchronous/asynchronous environments took 5 rounds and with ID clients in which the latency in the network simulation was less than 4 seconds.
 
 [Back to TOC](#table-of-contents)
 
