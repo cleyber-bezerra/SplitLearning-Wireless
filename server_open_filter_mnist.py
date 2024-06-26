@@ -43,6 +43,14 @@ print("device: ", device)
 mymodel = MyNet.MyNet_hidden().to(device)
 print("mymodel: ", mymodel)
 
+### DEFINIR OS CAMINHOS DE PASTAS
+pastas = ["./results/csv/ia", "./results/csv/ns3", "./results/img"]
+# Verificar e criar as pastas se não existirem
+for pasta in pastas:
+    if not os.path.exists(pasta):
+        os.makedirs(pasta)
+        print(f"Pasta '{pasta}' criada.")
+
 # -------------------- connection ----------------------
 # -------------------- conexão ----------------------
 # connection establish
@@ -58,8 +66,14 @@ s.listen(USER)
 print("Waiting clients...")
 
 # OPEN CLIENTS
-# Carregar o arquivo CSV com a sequência dos clientes e os dados de delay
-df = pd.read_csv('./results/csv/ns3/simulator_ns3.csv')
+# BUSCAR ARQUIVO CSV COM DADOS DE REDE
+file_path_ns3 = './results/csv/ns3/simulator_ns3.csv'
+# Verificar se o arquivo existe
+if os.path.isfile(file_path_ns3):
+    # Carregar o arquivo CSV com a sequência dos clientes e os dados de delay
+    df = pd.read_csv('./results/csv/ns3/simulator_ns3.csv')
+else:
+    print(f"O arquivo com dados de rede (.csv) não foi encontrado. Deve ser gerado no ns3")
 
 # Definir a sequência dos clientes e o vetor de accuracy_entrada
 client_sequence = df['Flow ID'].tolist()
