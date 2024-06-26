@@ -6,6 +6,7 @@ Server program
 import os
 import socket
 import pickle
+import argparse
 
 import torch
 import torch.nn as nn
@@ -54,7 +55,6 @@ client_sequence = df['Flow ID'].tolist()
 accuracy_entrada = df['Latency (s)'].tolist()
 
 FLAG = 1 # 0 - todos com latência, 1 - filtro de latencias
-
 if FLAG == 1 :
     # Filtrar clientes onde accuracy_entrada é menor ou igual a 0.4 e diferente de 'inf'
     filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
@@ -65,10 +65,11 @@ else:
     clients = filtered_clients
 
 print(clients)
+
 # Caminho para o interpretador Python
 python_interpreter = "python3"
 
-ASYNC = 1 # 0 - modelo sincrono, 1 - assincrono
+ASYNC = 0 # 0 - modelo sincrono, 1 - assincrono
 
 if ASYNC==1:
     # Executar cada script em um novo terminal
