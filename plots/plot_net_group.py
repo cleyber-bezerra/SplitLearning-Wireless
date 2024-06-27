@@ -23,6 +23,12 @@ axs[0, 0].set_xlabel('Client ID')
 axs[0, 0].set_ylabel('Latency (s)')
 axs[0, 0].legend(['Latency (s)'], loc='upper right')
 
+# Adicionar anotações nos pontos
+for i in range(len(df_filtered)):
+    axs[0, 0].annotate(f"{df_filtered['Latency (s)'].iloc[i]:.2f}", 
+                       (df_filtered['Flow ID'].iloc[i], df_filtered['Latency (s)'].iloc[i]), 
+                       textcoords="offset points", xytext=(0,10), ha='center')
+
 # Gráfico de linhas verticais para Taxa de Perda de Pacotes
 axs[0, 1].bar(df_filtered['Flow ID'], df_filtered['Packet Loss Ratio (%)'], color='r')
 axs[0, 1].set_title('Packet Loss Rate per Client ID')
@@ -30,12 +36,24 @@ axs[0, 1].set_xlabel('Client ID')
 axs[0, 1].set_ylabel('Packet Loss Ratio (%)')
 axs[0, 1].legend(['Packet Loss Ratio (%)'], loc='upper right')
 
-# Gráfico de linhas verticais para Taxa de Transferência
+# Adicionar anotações nas barras
+for i in range(len(df_filtered)):
+    axs[0, 1].annotate(f"{df_filtered['Packet Loss Ratio (%)'].iloc[i]:.2f}", 
+                       (df_filtered['Flow ID'].iloc[i], df_filtered['Packet Loss Ratio (%)'].iloc[i]), 
+                       textcoords="offset points", xytext=(0,10), ha='center')
+
+# Gráfico de linhas verticais para Vazão
 axs[1, 0].bar(df_filtered['Flow ID'], df_filtered['Throughput (Mbps)'], color='g')
-axs[1, 0].set_title('Throughput per Cliente ID')
+axs[1, 0].set_title('Throughput per Client ID')
 axs[1, 0].set_xlabel('Client ID')
 axs[1, 0].set_ylabel('Throughput (Mbps)')
 axs[1, 0].legend(['Throughput (Mbps)'], loc='upper right')
+
+# Adicionar anotações nas barras
+for i in range(len(df_filtered)):
+    axs[1, 0].annotate(f"{df_filtered['Throughput (Mbps)'].iloc[i]:.2f}", 
+                       (df_filtered['Flow ID'].iloc[i], df_filtered['Throughput (Mbps)'].iloc[i]), 
+                       textcoords="offset points", xytext=(0,10), ha='center')
 
 # Gráfico de linha para Consumo Energético
 axs[1, 1].plot(df_filtered['Flow ID'], df_filtered['Energy Consumed (J)'], marker='o', linestyle='-', color='m')
@@ -43,6 +61,12 @@ axs[1, 1].set_title('Energy Consumption per Client ID')
 axs[1, 1].set_xlabel('Client ID')
 axs[1, 1].set_ylabel('Energy Consumed (J)')
 axs[1, 1].legend(['Energy Consumed (J)'], loc='upper right')
+
+# Adicionar anotações nos pontos
+for i in range(len(df_filtered)):
+    axs[1, 1].annotate(f"{df_filtered['Energy Consumed (J)'].iloc[i]:.2f}", 
+                       (df_filtered['Flow ID'].iloc[i], df_filtered['Energy Consumed (J)'].iloc[i]), 
+                       textcoords="offset points", xytext=(0,10), ha='center')
 
 # Ajustar layout
 plt.tight_layout()
