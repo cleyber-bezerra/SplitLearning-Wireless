@@ -97,12 +97,37 @@ class AsynchronousSplitLearning:
 [Back to TOC](#table-of-contents)
 
 ## Results
-The results demonstrate the presentation of latencies, transfer rates, packet loss rates and energy consumption.
+### Results in the communication network environment.
+
+Figure 1 demonstrates the results within the scope of the simulation on the Wi-Fi network, graphically presenting: latencies, transfer rates, packet loss rates and energy consumption.
 
 <div style="text-align: center;">
-    <img src="/results/img/net_graficos_simulador_ns3.png" width="600">
+    <img src="/images/figure1.png" width="600">
 </div>
 Figure 1
+
+### Results in the machine learning environment with training and testing
+
+Figure 2 shows the result of latencies in relation to training and testing in the Split Learning learning model.
+
+<div style="text-align: center;">
+    <img src="/images/figure2.png" width="600">
+</div>
+Figure 2
+
+Figure 3 shows the result of packet losses in training and testing in the Split Learning learning model.
+
+<div style="text-align: center;">
+    <img src="/images/figure3.png" width="600">
+</div>
+Figure 3
+
+Figure 4 demonstrates the flow results in relation to training and testing in the Split Learning learning model
+
+<div style="text-align: center;">
+    <img src="/images/figure4.png" width="600">
+</div>
+Figure 4
 
 [Back to TOC](#table-of-contents)
 
