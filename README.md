@@ -225,7 +225,7 @@ a. Carry out training and testing in the `synchronous` environment.
 
 ```bash
 cd SplitLearning-Async-NS3
-python server_overhead_mnist.py
+python server.py --ASYNC=0
 ```
 > The name of the generated file will follow the pattern `result_train_sync.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
@@ -233,7 +233,7 @@ python server_overhead_mnist.py
 b. Carry out training and testing in the `asynchronous` environment.
 
 ```bash
-python server_overhead_mnist.py --ASYNC=1
+python server.py --ASYNC=1
 ```
 > The name of the generated file will follow the pattern `result_train_async.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
