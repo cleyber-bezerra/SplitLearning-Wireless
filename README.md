@@ -233,6 +233,7 @@ python server.py --ASYNC=0
 b. Carry out training and testing in the `asynchronous` environment.
 
 ```bash
+cd SplitLearning-Async-NS3
 python server.py --ASYNC=1
 ```
 > The name of the generated file will follow the pattern `result_train_async.csv`, and will be located in the internal path results/csv/ia.
