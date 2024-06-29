@@ -111,19 +111,31 @@ Figure 1
 ## Requirements
 
 - GNU (>=8.0.0)
+  
   command to know the version of KERNEL, GCC and GNU Binutils in the terminal
+  ```bash
 	cat /proc/version
+  ```
 - GCC (>=11.4.0)
+  
   commands to know the GCC version in the terminal.
+  ```bash
 	gcc --version
 	ls -l /usr/bin/gcc*
+  ```
 - CMAKE (>=3.24)
+  
   command to know the version of CMAKE in the terminal.
+  ```bash
 	cmake --version
+  ```
 - python (>=3.11.5)
+  
   commands to know the version of PYTHON in the terminal.
+  ```bash
 	python --version
 	python3 --version
+  ```
 - [ns-allinone (3.42)](https://www.nsnam.org/releases/ns-3-42/download/ )
   
 [Back to TOC](#table-of-contents)
