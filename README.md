@@ -225,7 +225,7 @@ a. Carry out training and testing in the `synchronous` environment.
 
 ```bash
 cd SplitLearning-Async-NS3
-python server.py --ASYNC=0
+python server_sync.py
 ```
 > The name of the generated file will follow the pattern `result_train_sync.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
@@ -234,7 +234,7 @@ b. Carry out training and testing in the `asynchronous` environment.
 
 ```bash
 cd SplitLearning-Async-NS3
-python server.py --ASYNC=1
+python server_async.py
 ```
 > The name of the generated file will follow the pattern `result_train_async.csv`, and will be located in the internal path results/csv/ia.
 > The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
