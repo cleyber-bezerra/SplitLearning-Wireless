@@ -26,15 +26,15 @@ int main(int argc, char *argv[])
     std::setlocale(LC_ALL, "");
 
     // Set a random seed
-    //RngSeedManager::SetSeed(1); // fetch current time: time(0) for Change the seed based on current time
-    //RngSeedManager::SetRun(1);  // Ensure same seed to guarantee same results each execution
+    RngSeedManager::SetSeed(1); // fetch current time: time(0) for Change the seed based on current time
+    RngSeedManager::SetRun(1);  // Ensure same seed to guarantee same results each execution
 
     // Simulation parameters
     uint32_t nWifi = 10;
     double simulationTime = 10.0; // seconds
-    double txPower = 30.0;         // dBm     (10, 30, 50)
-    double stApDistance = 10.0;    // meters  (10, 50, 100)
-    double lossExponent = 3.0; 	   // dB 2, 3, 4 for Low, moderate $ high exponents for low loss, moderate loss $ high losses
+    double txPower = 50.0;         // dBm     (10, 30, 50)
+    double stApDistance = 50.0;    // meters  (10, 50, 100)
+    double lossExponent = 4.0; 	   // dB 2, 3, 4 for Low, moderate $ high exponents for low loss, moderate loss $ high losses
     double referenceLoss = 40.0;   // dB Varies between 40 and 100 or higher, 40dB for Wifi environment with minimal obstacles and low interference
     
     // Command line arguments
@@ -92,8 +92,7 @@ int main(int argc, char *argv[])
                                   "GridWidth", UintegerValue(nWifi),
                                   "LayoutType", StringValue("RowFirst"));
 
-    //distancias variaveis
-    mobility.SetMobilityModel("ns3::RandomWalk2dMobilityModel", "Bounds", RectangleValue(Rectangle(-25, 25, -25, 25)));
+    //mobility.SetMobilityModel("ns3::RandomWalk2dMobilityModel", "Bounds", RectangleValue(Rectangle(-25, 25, -25, 25)));
     mobility.Install(wifiStaNodes);
 
     mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
@@ -157,12 +156,7 @@ int main(int argc, char *argv[])
     for (uint32_t j = 0; j < wifiStaNodes.GetN(); ++j)
     {
         Ptr<LiIonEnergySource> liIonSourcePtr = DynamicCast<LiIonEnergySource>(sources.Get(j));
-        if (liIonSourcePtr != nullptr) {
-            initialEnergies[j] = liIonSourcePtr->GetRemainingEnergy();
-        } else {
-            NS_LOG_ERROR("LiIonEnergySource is null for node " << j);
-            return 1; // Or handle error appropriately
-        }
+        initialEnergies[j] = liIonSourcePtr->GetRemainingEnergy();
     }
 
     // Flow monitor
@@ -194,36 +188,25 @@ int main(int argc, char *argv[])
             for (auto &nodePair : nodeIdMap)
             {
                 Ptr<Ipv4> ipv4 = nodePair.first->GetObject<Ipv4>();
-                if (ipv4 != nullptr) {
-                    Ipv4Address addr = ipv4->GetAddress(1, 0).GetLocal();
-                    if (addr == t.sourceAddress)
-                    {
-                        clientId = nodePair.second;
+                Ipv4Address addr = ipv4->GetAddress(1, 0).GetLocal();
+                if (addr == t.sourceAddress)
+                {
+                    clientId = nodePair.second;
 
-                        // Calculate energy consumption for transmission device
-                        Ptr<LiIonEnergySource> liIonSourcePtr = DynamicCast<LiIonEnergySource>(sources.Get(clientId - 1));
-                        if (liIonSourcePtr != nullptr) {
-                            energyConsumed = initialEnergies[clientId - 1] - liIonSourcePtr->GetRemainingEnergy();
-                        } else {
-                            NS_LOG_ERROR("LiIonEnergySource is null for client " << clientId);
-                        }
+                    // Calculate energy consumption for transmission device
+                    Ptr<LiIonEnergySource> liIonSourcePtr = DynamicCast<LiIonEnergySource>(sources.Get(clientId - 1));
+                    energyConsumed = initialEnergies[clientId - 1] - liIonSourcePtr->GetRemainingEnergy();
 
-                        break;
-                    }
-                } else {
-                    NS_LOG_ERROR("Ipv4 is null for node " << nodePair.second);
+                    break;
                 }
             }
-
-            // Calculate latency
-            double latency = (i->second.rxPackets > 0) ? i->second.delaySum.GetSeconds() / i->second.rxPackets : INFINITY;
 
             std::cout << "\nClient: " << clientId << " (Flow ID " << i->first << ")"
                       << " (" << t.sourceAddress << " -> " << t.destinationAddress << ")" << std::endl;
             std::cout << "Tx Packets = " << i->second.txPackets << std::endl;
             std::cout << "Rx Packets = " << i->second.rxPackets << std::endl;
             std::cout << "Throughput = " << std::fixed << std::setprecision(6) << i->second.rxBytes * 8.0 / (simulationTime - 1) / 1024 / 1024 << " Mbps" << std::endl;
-            std::cout << "Latency = " << std::fixed << std::setprecision(6) << latency << " s" << std::endl;
+            std::cout << "Delay = " << std::fixed << std::setprecision(6) << (i->second.rxPackets > 0 ? i->second.delaySum.GetSeconds() / i->second.rxPackets : INFINITY) << " s" << std::endl;
             std::cout << "Packet Loss Ratio = " << std::fixed << std::setprecision(6) << (i->second.txPackets > 0 ? (i->second.txPackets - i->second.rxPackets) * 100.0 / i->second.txPackets : INFINITY) << " %" << std::endl;
             std::cout << "Transmission Time = " << std::fixed << std::setprecision(6) << (i->second.txPackets > 0 ? (i->second.timeLastRxPacket - i->second.timeFirstTxPacket).GetSeconds() : INFINITY) << " s" << std::endl;
             std::cout << "Energy Consumed = " << std::fixed << std::setprecision(6) << energyConsumed << " J" << std::endl;
@@ -231,8 +214,9 @@ int main(int argc, char *argv[])
     }
 
     // Output statistics to CSV file
+    // std::cout << "\nWriting statistics to CSV file..." << std::endl;
     std::ofstream outputFile("./scratch/SL/results/csv/ns3/simulator_ns3.csv");
-    outputFile << "Client,Flow ID,Source Address,Destination Address,Tx Packets,Rx Packets,Throughput (Mbps),Latency (s),Packet Loss Ratio (%),Transmission Time (s),Energy Consumed (J)\n";
+    outputFile << "Client,Flow ID,Source Address,Destination Address,Tx Packets,Rx Packets,Throughput (Mbps),Delay (s),Packet Loss Ratio (%),Transmission Time (s),Energy Consumed (J)\n";
 
     for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator i = stats.begin(); i != stats.end(); ++i)
     {
@@ -248,39 +232,29 @@ int main(int argc, char *argv[])
             for (auto &nodePair : nodeIdMap)
             {
                 Ptr<Ipv4> ipv4 = nodePair.first->GetObject<Ipv4>();
-                if (ipv4 != nullptr) {
-                    Ipv4Address addr = ipv4->GetAddress(1, 0).GetLocal();
-                    if (addr == t.sourceAddress)
-                    {
-                        clientId = nodePair.second;
+                Ipv4Address addr = ipv4->GetAddress(1, 0).GetLocal();
+                if (addr == t.sourceAddress)
+                {
+                    clientId = nodePair.second;
 
-                        // Calculate energy consumption for transmission device
-                        Ptr<LiIonEnergySource> liIonSourcePtr = DynamicCast<LiIonEnergySource>(sources.Get(clientId - 1));
-                        if (liIonSourcePtr != nullptr) {
-                            energyConsumed = initialEnergies[clientId - 1] - liIonSourcePtr->GetRemainingEnergy();
-                        } else {
-                            NS_LOG_ERROR("LiIonEnergySource is null for client " << clientId);
-                        }
+                    // Calculate energy consumption for transmission device
+                    Ptr<LiIonEnergySource> liIonSourcePtr = DynamicCast<LiIonEnergySource>(sources.Get(clientId - 1));
+                    energyConsumed = initialEnergies[clientId - 1] - liIonSourcePtr->GetRemainingEnergy();
 
-                        break;
-                    }
-                } else {
-                    NS_LOG_ERROR("Ipv4 is null for node " << nodePair.second);
+                    break;
                 }
             }
-
-            // Calculate latency
-            double latency = (i->second.rxPackets > 0) ? i->second.delaySum.GetSeconds() / i->second.rxPackets : INFINITY;
 
             outputFile << clientId << "," << i->first << "," << t.sourceAddress << "," << t.destinationAddress << ","
                        << i->second.txPackets << "," << i->second.rxPackets << ","
                        << std::fixed << std::setprecision(6) << i->second.rxBytes * 8.0 / (simulationTime - 1) / 1024 / 1024 << ","
-                       << std::fixed << std::setprecision(6) << latency << ","
+                       << std::fixed << std::setprecision(6) << (i->second.rxPackets > 0 ? i->second.delaySum.GetSeconds() / i->second.rxPackets : INFINITY) << ","
                        << std::fixed << std::setprecision(6) << (i->second.txPackets > 0 ? (i->second.txPackets - i->second.rxPackets) * 100.0 / i->second.txPackets : INFINITY) << ","
                        << std::fixed << std::setprecision(6) << (i->second.txPackets > 0 ? (i->second.timeLastRxPacket - i->second.timeFirstTxPacket).GetSeconds() : INFINITY) << ","
                        << std::fixed << std::setprecision(6) << energyConsumed << "\n";
         }
     }
+
     outputFile.close();
     std::cout << "\nStatistics written to CSV file.\n" << std::endl;
 
@@ -289,3 +263,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
