@@ -99,7 +99,7 @@ class AsynchronousSplitLearning:
 ## Results
 ### Results in the communication network environment.
 
-Demonstrates the results within the scope of the simulation on the Wi-Fi network, graphically presenting: latencies, transfer rates, packet loss rates and energy consumption.
+Demonstrations of results within the scope of simulation on the Wi-Fi network, graphically presenting: latencies, transfer rates, packet loss rates and energy consumption.
 
 <p align='center'>
     <img src='/images/figure1.png' width='500'>
@@ -110,7 +110,7 @@ Demonstrates the results within the scope of the simulation on the Wi-Fi network
     </figurecaption>
 </p>
 
-Fig. 1 shows the result of latencies in relation to training and testing in the Split Learning learning model.
+Figure 1 shows the result of latencies in the network simulation.
 
 
 <p align='center'>
@@ -122,7 +122,7 @@ Fig. 1 shows the result of latencies in relation to training and testing in the 
     </figurecaption>
 </p>
 
-Fig. 2 shows the result of packet losses in training and testing in the Split Learning learning model.
+Figure 2 shows the result of packet losses in the network simulation.
 
 
 <p align='center'>
@@ -134,7 +134,7 @@ Fig. 2 shows the result of packet losses in training and testing in the Split Le
     </figurecaption>
 </p>
 
-Fig. 3 demonstrates the flow results in relation to training and testing in the Split Learning learning model
+Figure 3 demonstrates the throughput results in the network simulation.
 
 <p align='center'>
     <img src='/images/figure4.png' width='500'>
@@ -145,7 +145,7 @@ Fig. 3 demonstrates the flow results in relation to training and testing in the 
     </figurecaption>
 </p>
 
-Fig. 4 demonstrates the energy consumption in relation to training and testing in the Split Learning learning model
+Figure 4 demonstrates the energy consumption results in the network simulation.
 
 ### Results in the machine learning environment with training and testing
 
@@ -154,22 +154,21 @@ Fig. 4 demonstrates the energy consumption in relation to training and testing i
 </p>    
 <p align='center'>
     <figurecaption>
-        Fig. 5. Throughput.
+        Fig. 5. Accuracy per Round.
     </figurecaption>
 </p>
-
-Fig. 5 demonstrates the flow results in relation to training and testing in the Split Learning learning model
+Figure 5 shows the result of accuracy per round during training and testing in the Split Learning learning model.
 
 <p align='center'>
     <img src='/images/figure6.png' width='500'>
 </p>    
 <p align='center'>
     <figurecaption>
-        Fig. 6. Throughput.
+        Fig. 6. Processing Accuracy.
     </figurecaption>
 </p>
 
-Fig. 6 demonstrates the flow results in relation to training and testing in the Split Learning learning model
+Figure 6 demonstrates the processing accuracy results during training and testing in the Split Learning learning model.
 
 [Back to TOC](#table-of-contents)
 
