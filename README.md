@@ -99,29 +99,30 @@ class AsynchronousSplitLearning:
 ## Results
 ### Results in the communication network environment.
 
+Demonstrates the results within the scope of the simulation on the Wi-Fi network, graphically presenting: latencies, transfer rates, packet loss rates and energy consumption.
+
 <p align='center'>
-    <img src='/images/figure1.png' width='600'>
+    <img src='/images/figure1.png' width='500'>
 </p>    
 <p align='center'>
     <figurecaption>
-        Fig. 1. Network Simulation NS3.
+        Fig. 1. Latencys.
     </figurecaption>
 </p>
 
-Fig. 1 demonstrates the results within the scope of the simulation on the Wi-Fi network, graphically presenting: latencies, transfer rates, packet loss rates and energy consumption.
+Fig. 1 shows the result of latencies in relation to training and testing in the Split Learning learning model.
 
-### Results in the machine learning environment with training and testing
 
 <p align='center'>
     <img src='/images/figure2.png' width='500'>
 </p>    
 <p align='center'>
     <figurecaption>
-        Fig. 2. Latencys.
+        Fig. 2. Packet Losses.
     </figurecaption>
 </p>
 
-Fig. 2 shows the result of latencies in relation to training and testing in the Split Learning learning model.
+Fig. 2 shows the result of packet losses in training and testing in the Split Learning learning model.
 
 
 <p align='center'>
@@ -129,12 +130,11 @@ Fig. 2 shows the result of latencies in relation to training and testing in the 
 </p>    
 <p align='center'>
     <figurecaption>
-        Fig. 3. Packet Losses.
+        Fig. 3. Throughput.
     </figurecaption>
 </p>
 
-
-Fig. 3 shows the result of packet losses in training and testing in the Split Learning learning model.
+Fig. 3 demonstrates the flow results in relation to training and testing in the Split Learning learning model
 
 <p align='center'>
     <img src='/images/figure4.png' width='500'>
@@ -145,8 +145,31 @@ Fig. 3 shows the result of packet losses in training and testing in the Split Le
     </figurecaption>
 </p>
 
+Fig. 4 demonstrates the energy consumption in relation to training and testing in the Split Learning learning model
 
-Fig. 4 demonstrates the flow results in relation to training and testing in the Split Learning learning model
+### Results in the machine learning environment with training and testing
+
+<p align='center'>
+    <img src='/images/figure5.png' width='500'>
+</p>    
+<p align='center'>
+    <figurecaption>
+        Fig. 5. Throughput.
+    </figurecaption>
+</p>
+
+Fig. 5 demonstrates the flow results in relation to training and testing in the Split Learning learning model
+
+<p align='center'>
+    <img src='/images/figure6.png' width='500'>
+</p>    
+<p align='center'>
+    <figurecaption>
+        Fig. 6. Throughput.
+    </figurecaption>
+</p>
+
+Fig. 6 demonstrates the flow results in relation to training and testing in the Split Learning learning model
 
 [Back to TOC](#table-of-contents)
 
