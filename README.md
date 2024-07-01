@@ -5,7 +5,7 @@
 <p align='center' style="margin-bottom: -4px">E-mail: {cleyber.bezerra}@discente.ufg.br</p>
 <p align='center'>E-mail: {antonio}@inf.ufg.br</p>
 
-
+# Description
 The repository contains all development related to the master's thesis entitled "Split Learning as an enabler of wireless networks for future generations". Being developed through the Academic Master's Course in Computer Science - In-person - Goiânia, by the Institute of Informatics (INF) of the Federal University of Goiás (UFG).
 
 # Table of Contents
