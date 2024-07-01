@@ -42,7 +42,7 @@ T
 
 ## Proposed Synchronization Algorithm
 
-T
+The proposed synchronization algorithm was included in `clientX_async.py` clients in order to minimize the constant exchange of communication between clients and server in the Split Learning structure as a means to reduce communication overhead.
 
 ```python
 class AsynchronousSplitLearning:
