@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
 
     // Output statistics to CSV file
     // std::cout << "\nWriting statistics to CSV file..." << std::endl;
-    std::ofstream outputFile("./scratch/SplitLearning-Async-NS3/results/csv/ns3/simulator_ns3.csv");
+    std::ofstream outputFile("./scratch/SL/results/csv/ns3/simulator_ns3.csv");
     outputFile << "Client,Flow ID,Source Address,Destination Address,Tx Packets,Rx Packets,Throughput (Mbps),Delay (s),Packet Loss Ratio (%),Transmission Time (s),Energy Consumed (J)\n";
 
     for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator i = stats.begin(); i != stats.end(); ++i)

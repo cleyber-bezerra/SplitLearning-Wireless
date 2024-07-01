@@ -44,7 +44,6 @@ host = '127.0.0.1'
 port = 19089
 ADDR = (host, port)
 s = socket.socket()
-s.settimeout(7200) # 7200 seg, 60min, 2h de espera no socket
 s.bind(ADDR)
 USER = 20 # número de clientes a serem atendidos simultaneamente.
 s.listen(USER)
@@ -55,9 +54,9 @@ df = pd.read_csv('./results/csv/ns3/simulator_ns3.csv')
 client_sequence = df['Flow ID'].tolist()
 accuracy_entrada = df['Latency (s)'].tolist()
 
-FLAG = 1 # 0 - todos com latência, 1 - filtro de latencias
+FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
 
-if FLAG == 1:
+if FLAG == 0:
     filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
     clients = client_sequence
 else:
@@ -70,7 +69,7 @@ print(clients)
 python_interpreter = "python3"
 
 for client in clients:
-    script_path = f"./clients/client{client}_sync.py"
+    script_path = f"./clients/client{client}_async.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path])
 
 for num_user in range(USER):
@@ -189,7 +188,6 @@ def train(user):
     print("Total Communication Time: ", total_comm_time)
     print("Total Communication Data: ", total_comm_data, "bytes")
 
-    
     #gráficos de Net(Simulator NS3)
     plot_acc_file_path = f"./plots/plot_net_result.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, plot_acc_file_path])
@@ -202,6 +200,7 @@ def train(user):
     plot_acc_file_path = f"./plots/plot_net_group.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, plot_acc_file_path])
     '''
+    
 if __name__ == '__main__':
     train(user_info[0])
 
