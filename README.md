@@ -36,7 +36,7 @@ In this integrated scenario, network experiments are simulated with distance var
 
 ## Baselines
 
-T
+The methods defined as baselines for our proposal: (1) the use of the asynchronous algorithm in training the Split Learning model and (2) the definition of training based on events provided from the simulation in NS3 based on the established latency policy. The training uses the file provided by the simulation (simulator_ns3.csv). 10 devices are simulated and the established policy for network latency is nodes below 04 seconds.
 
 [Back to TOC](#table-of-contents)
 
