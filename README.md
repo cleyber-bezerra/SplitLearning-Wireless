@@ -245,26 +245,22 @@ We can then begin the process of training and testing the machine learning model
 
 ## Run Experiments
 ### Trains and Tests
-
-a. Carry out training and testing in the `synchronous` environment.
-
-```bash
-cd SplitLearning-Async-NS3
-python server_sync.py
-```
-> The name of the generated file will follow the pattern `result_train_sync.csv`, and will be located in the internal path results/csv/ia.
-> The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
-
-b. Carry out training and testing in the `asynchronous` environment.
+To carry out training and testing in `synchronous` or `asynchronous` environments.
 
 ```bash
 cd SplitLearning-Async-NS3
-python server_async.py
+python run.py sync
 ```
-> The name of the generated file will follow the pattern `result_train_async.csv`, and will be located in the internal path results/csv/ia.
-> The names of the generated files will follow the pattern `net_*.png`, and will be located in the internal path results/img.
+or
 
-Note: training and testing in both synchronous/asynchronous environments took 5 rounds and with ID clients in which the latency in the network simulation was less than 4 seconds.
+```bash
+cd SplitLearning-Async-NS3
+python run.py async 
+```
+1) The generated CSV files will follow the following names `result_train_sync.csv` or `result_train_async.csv`, and will be located in the csv/ia folder.
+2) The names of the generated graphic files will follow the pattern `net_*.png`, and will be located in the `images` folder.
+
+Note: training and testing in synchronous/asynchronous environments is 1 round and with ID clients where the latency in the network simulation was less than 4 seconds.
 
 [Back to TOC](#table-of-contents)
 
