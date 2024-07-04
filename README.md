@@ -232,6 +232,12 @@ Then, compile the source code from the ns-3 `scratch` files.
 ```bash
 ./ns3 run scratch/SplitLearning-Async-NS3/my_wifi_ap_net_rand.cc
 ```
+or
+
+```bash
+./simulator_net.sh
+```
+
 
 > The name of the generated file will follow the pattern `simulator_ns3.csv`, and will be located in the internal path results/csv/ns3.
 
