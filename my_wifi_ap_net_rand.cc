@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     RngSeedManager::SetRun(1);  // Ensure same seed to guarantee same results each execution
 
     // Simulation parameters
-    uint32_t nWifi = 10;
+    uint32_t nWifi = 4;
     double simulationTime = 10.0; // seconds
     double txPower = 50.0;         // dBm     (10, 30, 50)
     double stApDistance = 50.0;    // meters  (10, 50, 100)
@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
 
     // Output statistics to CSV file
     // std::cout << "\nWriting statistics to CSV file..." << std::endl;
-    std::ofstream outputFile("./scratch/SL/results/csv/ns3/simulator_ns3.csv");
+    std::ofstream outputFile("./scratch/SplitLearning-Async-NS3/csv/ns3/simulator_ns3.csv");
     outputFile << "Client,Flow ID,Source Address,Destination Address,Tx Packets,Rx Packets,Throughput (Mbps),Delay (s),Packet Loss Ratio (%),Transmission Time (s),Energy Consumed (J)\n";
 
     for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator i = stats.begin(); i != stats.end(); ++i)
