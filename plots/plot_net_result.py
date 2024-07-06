@@ -13,6 +13,7 @@ df['Latency (s)'] = pd.to_numeric(df['Latency (s)'])
 df['Packet Loss Ratio (%)'] = pd.to_numeric(df['Packet Loss Ratio (%)'])
 df['Throughput (Mbps)'] = pd.to_numeric(df['Throughput (Mbps)'])
 df['Energy Consumed (J)'] = pd.to_numeric(df['Energy Consumed (J)'])
+df['Flow ID'] = pd.to_numeric(df['Flow ID'], downcast='integer') # linha inclusa 04/07/24 16h10 - inteiro nos clientes
 
 # Gráfico 1: Latência em relação ao Flow ID
 plt.figure(figsize=(10, 6))
@@ -22,6 +23,9 @@ plt.xlabel('Client ID')
 plt.ylabel('Latency (s)')
 plt.legend(['Latency (s)'])
 plt.grid(True)
+
+# Definir os ticks do eixo X para serem inteiros e sequenciais
+plt.xticks(ticks=range(df['Flow ID'].min(), df['Flow ID'].max() + 1))
 
 # Adicionar anotações
 for i, row in df.iterrows():
