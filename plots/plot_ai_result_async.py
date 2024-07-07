@@ -7,7 +7,7 @@ p_time = []
 cal_times = []
 
 # Caminho para o arquivo CSV
-file = './results/csv/ia/result_train_async.csv'
+file = './csv/ia/result_train_async.csv'
 
 # Abrir o arquivo e contar as linhas
 with open(file, 'r') as f:

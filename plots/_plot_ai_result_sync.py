@@ -63,7 +63,7 @@ for i in range(USER):
         print(f"Erro: client {i+1} não tem elementos em val_acc")
 
 # Gráfico de barras para Epoch vs Accuracy
-plt.figure()
+plt.figure(figsize=(10, 6))
 for i in range(USER):
     if len(val_acc[i]) > 0:
         plt.bar(range(len(val_acc[i])), val_acc[i], label=f'Client {i+1}')
@@ -75,12 +75,12 @@ plt.title('Epoch vs Accuracy - Train', fontsize=14)
 plt.xlabel('Epoch', fontsize=14)
 plt.ylabel('Accuracy', fontsize=14)
 plt.tick_params(labelsize=14)
-plt.grid()
+plt.grid(True)
 plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
 plt.savefig('./images/figure5.png')
 
 # Gráfico de barras horizontais para Processing time [s] vs Accuracy
-plt.figure()
+plt.figure(figsize=(10, 6))
 for i in range(USER):
     if len(cal_times[i]) > 0 and len(val_acc[i]) > 0:
         plt.barh(cal_times[i], val_acc[i], label=f'Client {i+1}')
@@ -92,15 +92,15 @@ plt.title('Processing time [s] vs Accuracy - Train', fontsize=14)
 plt.xlabel('Accuracy', fontsize=14)
 plt.ylabel('Processing time [s]', fontsize=14)
 plt.tick_params(labelsize=14)
-plt.grid()
+plt.grid(True)
 plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
 plt.savefig('./images/figure6.png')
 
 # Gráfico de linhas para Taxa de Transmissão vs Época
-plt.figure()
+plt.figure(figsize=(10, 6))
 for i in range(USER):
     throughput_data = eval(throughput[i])  # Assumindo que throughput é uma lista armazenada como string
-    plt.plot(range(len(throughput_data)), throughput_data, label=f'Client {i+1}')
+    plt.plot(range(len(throughput_data)), throughput_data, marker='o', label=f'Client {i+1}')
     for x, y in zip(range(len(throughput_data)), throughput_data):
         plt.annotate(f'{y:.2f}', (x, y), textcoords="offset points", xytext=(0,10), ha='center')
 
@@ -109,6 +109,6 @@ plt.title('Transmission Rate vs Epoch - Train', fontsize=14)
 plt.xlabel('Epoch', fontsize=14)
 plt.ylabel('Transmission Rate', fontsize=14)
 plt.tick_params(labelsize=14)
-plt.grid()
+plt.grid(True)
 plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
 plt.savefig('./images/figure7.png')

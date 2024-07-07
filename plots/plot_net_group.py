@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Ler o arquivo CSV
-df = pd.read_csv('./results/csv/ns3/simulator_ns3.csv')
+df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
 
 # Filtrar os dados onde a latência é diferente de "inf"
 df_filtered = df[df['Latency (s)'] != 'inf']
