@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 # Inicialize as listas antes de usá-las
-train_loss, train_acc, val_loss, val_acc, p_time, throughput = [], [], [], [], [], []
+train_loss, train_acc, val_loss, val_acc, p_time = [], [], [], [], []
 cal_times = []
 
 # Caminho para o arquivo CSV
@@ -26,7 +26,6 @@ train_acc = df.iloc[:, 2].tolist()
 val_loss = df.iloc[:, 3].tolist()
 val_acc = df.iloc[:, 4].tolist()
 p_time = df.iloc[:, 5].tolist()
-throughput = df.iloc[:, 6].tolist()  # Assumindo que a coluna de taxa de transmissão é a 6ª
 
 for i in range(min(USER, len(val_acc))):
     try:
@@ -71,7 +70,7 @@ for i in range(USER):
             plt.annotate(f'{y:.2f}', (x, y), textcoords="offset points", xytext=(0,10), ha='center')
 
 plt.legend(fontsize=14)
-plt.title('Epoch vs Accuracy - Train', fontsize=14)
+plt.title('Epoch vs Accuracy', fontsize=14)
 plt.xlabel('Epoch', fontsize=14)
 plt.ylabel('Accuracy', fontsize=14)
 plt.tick_params(labelsize=14)
@@ -88,7 +87,7 @@ for i in range(USER):
             plt.annotate(f'{y:.2f}', (y, x), textcoords="offset points", xytext=(10,0), ha='center')
 
 plt.legend(fontsize=14)
-plt.title('Processing time [s] vs Accuracy - Train', fontsize=14)
+plt.title('Processing time [s] vs Accuracy', fontsize=14)
 plt.xlabel('Accuracy', fontsize=14)
 plt.ylabel('Processing time [s]', fontsize=14)
 plt.tick_params(labelsize=14)
@@ -96,19 +95,3 @@ plt.grid()
 plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
 plt.savefig('./images/figure6.png')
 
-# Gráfico de linhas para Taxa de Transmissão vs Época
-plt.figure()
-for i in range(USER):
-    throughput_data = eval(throughput[i])  # Assumindo que throughput é uma lista armazenada como string
-    plt.plot(range(len(throughput_data)), throughput_data, label=f'Client {i+1}')
-    for x, y in zip(range(len(throughput_data)), throughput_data):
-        plt.annotate(f'{y:.2f}', (x, y), textcoords="offset points", xytext=(0,10), ha='center')
-
-plt.legend(fontsize=14)
-plt.title('Transmission Rate vs Epoch - Train', fontsize=14)
-plt.xlabel('Epoch', fontsize=14)
-plt.ylabel('Transmission Rate', fontsize=14)
-plt.tick_params(labelsize=14)
-plt.grid()
-plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
-plt.savefig('./images/figure7.png')
