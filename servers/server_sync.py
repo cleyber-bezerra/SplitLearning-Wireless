@@ -55,23 +55,33 @@ df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
 client_sequence = df['Flow ID'].tolist()
 accuracy_entrada = df['Latency (s)'].tolist()
 
-FLAG = 1 # 0 - todos com latência, 1 - filtro de latencias
+FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
 
 if FLAG == 1:
     filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
-    clients = client_sequence
+    clients = filtered_clients
 else:
     filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
+    filtered_accuracy = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
+    accuracies=filtered_accuracy
+
     print('Clients in the training set: {filtered_clients}')
     clients = filtered_clients
 
 print(clients)
+print(accuracies)
 
 python_interpreter = "python3"
-
+'''
 for client in clients:
-    script_path = f"./clients/sync/client{client}_sync.py"
+    script_path = f"./clients/sync/client{client}_sync.py  {accuracy}"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path])
+'''
+
+for client, accuracy in zip(clients, accuracies):
+    script_path = f"./clients/sync/client{client}_sync.py"
+    subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path, str(accuracy)])
+
 
 for num_user in range(USER):
     conn, addr = s.accept()
