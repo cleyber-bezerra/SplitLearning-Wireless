@@ -91,7 +91,7 @@ dammy = s.recv(4)
 
 # ------------------ start training -----------------
 # ------------------ comece a treinar -----------------
-epochs = 1
+epochs = 3
 lr = 0.005
 
 # set error function
