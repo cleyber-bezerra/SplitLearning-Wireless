@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
             std::cout << "Tx Packets = " << i->second.txPackets << std::endl;
             std::cout << "Rx Packets = " << i->second.rxPackets << std::endl;
             std::cout << "Throughput = " << std::fixed << std::setprecision(6) << i->second.rxBytes * 8.0 / (simulationTime - 1) / 1024 / 1024 << " Mbps" << std::endl;
-            std::cout << "Latency = " << std::fixed << std::setprecision(6) << (i->second.rxPackets > 0 ? i->second.delaySum.GetSeconds() / i->second.rxPackets : INFINITY) << " s" << std::endl;
+            std::cout << "Delay = " << std::fixed << std::setprecision(6) << (i->second.rxPackets > 0 ? i->second.delaySum.GetSeconds() / i->second.rxPackets : INFINITY) << " s" << std::endl;
             std::cout << "Packet Loss Ratio = " << std::fixed << std::setprecision(6) << (i->second.txPackets > 0 ? (i->second.txPackets - i->second.rxPackets) * 100.0 / i->second.txPackets : INFINITY) << " %" << std::endl;
             std::cout << "Transmission Time = " << std::fixed << std::setprecision(6) << (i->second.txPackets > 0 ? (i->second.timeLastRxPacket - i->second.timeFirstTxPacket).GetSeconds() : INFINITY) << " s" << std::endl;
             std::cout << "Energy Consumed = " << std::fixed << std::setprecision(6) << energyConsumed << " J" << std::endl;
@@ -216,7 +216,7 @@ int main(int argc, char *argv[])
     // Output statistics to CSV file
     // std::cout << "\nWriting statistics to CSV file..." << std::endl;
     std::ofstream outputFile("./scratch/SplitLearning-NS3/csv/ns3/simulator_ns3.csv");
-    outputFile << "Client,Flow ID,Source Address,Destination Address,Tx Packets,Rx Packets,Throughput (Mbps),Latency (s),Packet Loss Ratio (%),Transmission Time (s),Energy Consumed (J)\n";
+    outputFile << "Client,Flow ID,Source Address,Destination Address,Tx Packets,Rx Packets,Throughput (Mbps),Delay (s),Packet Loss Ratio (%),Transmission Time (s),Energy Consumed (J)\n";
 
     for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator i = stats.begin(); i != stats.end(); ++i)
     {

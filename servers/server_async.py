@@ -42,24 +42,24 @@ for pasta in pastas:
 # OPEN CLIENTS
 df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
 client_in = df['Flow ID'].tolist()
-latency_in = df['Latency (s)'].tolist()
+delay_in = df['Latency (s)'].tolist()
 
 FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
 
 if FLAG == 1:
-    filtered_clients = [client_in[i] for i in range(len(latency_in)) if latency_in[i] <= 0.40 and latency_in[i] != float('inf')]
-    filtered_clients = [latency_in[i] for i in range(len(latency_in)) if latency_in[i] <= 0.40 and latency_in[i] != float('inf')]
-    latency=filtered_latency
+    filtered_clients = [client_in[i] for i in range(len(delay_in)) if delay_in[i] <= 0.40 and delay_in[i] != float('inf')]
+    filtered_clients = [delay_in[i] for i in range(len(delay_in)) if delay_in[i] <= 0.40 and delay_in[i] != float('inf')]
+    delays=filtered_delay
     clients = filtered_clients
 else:
-    filtered_clients = [client_in[i] for i in range(len(latency_in)) if latency_in[i] != float('inf')]
-    filtered_latency = [latency_in[i] for i in range(len(latency_in)) if latency_in[i] != float('inf')]
-    latency=filtered_latency
+    filtered_clients = [client_in[i] for i in range(len(delay_in)) if delay_in[i] != float('inf')]
+    filtered_delay = [delay_in[i] for i in range(len(delay_in)) if delay_in[i] != float('inf')]
+    delays=filtered_delay
     clients = filtered_clients
 
 print("Number Clients: ", len(clients))
 print("Clients: ", clients)
-print("Number Clients: ", latency)
+print("Number Clients: ", delays)
 
 
 # -------------------- connection ----------------------
@@ -74,15 +74,10 @@ s.listen(USER)
 print("Waiting clients...")
 
 python_interpreter = "python3"
-'''
-for client in clients:
-    script_path = f"./clients/sync/client{client}_async.py  {accuracy}"
-    subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path])
-'''
 
-for client, accuracy in zip(clients, latency):
+for client, delay in zip(clients, delays):
     script_path = f"./clients/sync/client{client}_async.py"
-    subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path, str(accuracy)])
+    subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path, str(delay)])
 
 for num_user in range(USER):
     conn, addr = s.accept()
