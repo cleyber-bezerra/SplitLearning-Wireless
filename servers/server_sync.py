@@ -38,17 +38,7 @@ for pasta in pastas:
         os.makedirs(pasta)
         print(f"Pasta '{pasta}' criada.")
 
-# -------------------- connection ----------------------
-user_info = []
-host = '127.0.0.1'
-port = 19089
-ADDR = (host, port)
-s = socket.socket()
-s.settimeout(7200) # 7200 seg, 60min, 2h de espera no socket
-s.bind(ADDR)
-USER = 6 # número de clientes a serem atendidos simultaneamente.
-s.listen(USER)
-print("Waiting clients...")
+
 
 # OPEN CLIENTS
 df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
@@ -59,17 +49,32 @@ FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
 
 if FLAG == 1:
     filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
+    filtered_accuracy = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
     clients = filtered_clients
+    accuracies=filtered_accuracy
 else:
     filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
     filtered_accuracy = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
+    clients = filtered_clients
     accuracies=filtered_accuracy
 
-    print('Clients in the training set: {filtered_clients}')
-    clients = filtered_clients
-
-print(clients)
+print(clients, len(clients))
 print(accuracies)
+
+
+# -------------------- connection ----------------------
+user_info = []
+host = '127.0.0.1'
+port = 19089
+ADDR = (host, port)
+s = socket.socket()
+s.settimeout(7200) # 7200 seg, 60min, 2h de espera no socket
+s.bind(ADDR)
+USER = len(clients) # número de clientes a serem atendidos simultaneamente do CSV.
+s.listen(USER)
+print("Waiting clients...")
+
+
 
 python_interpreter = "python3"
 '''

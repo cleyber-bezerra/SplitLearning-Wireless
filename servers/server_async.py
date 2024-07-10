@@ -56,21 +56,30 @@ accuracy_entrada = df['Latency (s)'].tolist()
 
 FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
 
-if FLAG == 0:
+if FLAG == 1:
     filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
-    clients = client_sequence
+    filtered_clients = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
+    accuracies=filtered_accuracy
+    clients = filtered_clients
 else:
     filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
-    print('Clients in the training set: {filtered_clients}')
+    filtered_accuracy = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
+    accuracies=filtered_accuracy
     clients = filtered_clients
 
 print(clients)
+print(accuracies)
 
 python_interpreter = "python3"
-
+'''
 for client in clients:
-    script_path = f"./clients/async/client{client}_async.py"
+    script_path = f"./clients/sync/client{client}_async.py  {accuracy}"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path])
+'''
+
+for client, accuracy in zip(clients, accuracies):
+    script_path = f"./clients/sync/client{client}_async.py"
+    subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path, str(accuracy)])
 
 for num_user in range(USER):
     conn, addr = s.accept()

@@ -1,9 +1,6 @@
 import gc
-from glob import escape
 import os
-from pyexpat import model
 import socket
-import struct
 import pickle
 import numpy as np
 import torch
@@ -37,8 +34,15 @@ BATCH_SIZE = 128
 
 print(" ------ CLIENT 10 ------")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-# device = torch.device('cpu')
 print("device: ", device)
+
+# Argumento de linha de comando para accuracy
+if len(sys.argv) < 2:
+    print("Uso: client_sync.py <accuracy>")
+    sys.exit(1)
+
+accuracy = float(sys.argv[1])
+print(f"Accuracy recebido: {accuracy}")
 
 #MNIST
 root = './datasets/mnist_data'
@@ -49,13 +53,6 @@ transform = transforms.Compose([
 
 # download dataset
 trainset = torchvision.datasets.MNIST(root=root, download=True, train=True, transform=transform)
-# if you want to divide dataset, remove comments below.
-# se você deseja dividir o conjunto de dados, remova os comentários abaixo.
-# indices = np.arange(len(trainset))
-# train_dataset = torch.utils.data.Subset(
-#     trainset, indices[0:20000]
-# )
-# trainset = train_dataset
 testset = torchvision.datasets.MNIST(root=root, download=True, train=False, transform=transform)
 
 print("trainset_len: ", len(trainset))
@@ -91,7 +88,7 @@ dammy = s.recv(4)
 
 # ------------------ start training -----------------
 # ------------------ comece a treinar -----------------
-epochs = 3
+epochs = 1
 lr = 0.005
 
 # set error function
@@ -118,10 +115,12 @@ def train():
         if MODEL == 1:
             optimizer1.zero_grad()
             output_1 = mymodel1(data)
+            time.sleep(0.3521)  # Adiciona latência na ativação
             output = output_1
         elif MODEL == 2:
             optimizer2.zero_grad()
             output_2 = mymodel2(data)
+            time.sleep(0.3521)  # Adiciona latência na ativação
             output = output_2
         else:
             print("!!!!! MODEL not found !!!!!")
@@ -157,7 +156,8 @@ def train():
 
             output_1 = forward_prop(MODEL, data)
 
-            # SEND ----------- feature data 1 ---------------
+            time.sleep(accuracy)
+            # SEND ----------- feature data 1 ----------------
             # ENVIAR ----------- dados do recurso 1 ---------------
             start_time = process_time()
             sf.send_size_n_msg(output_1, s)
@@ -194,6 +194,7 @@ def train():
             comm_time += process_time() - start_time
             comm_data_size += recv_data2.grad.element_size() * recv_data2.grad.nelement()
 
+            time.sleep(accuracy)
             # RECEIVE ----------- grad 1 -----------
             # RECEBER ----------- 1ª série -----------
             start_time = process_time()
@@ -207,6 +208,7 @@ def train():
             train_acc += (OUTPUT.max(1)[1] == labels).sum().item()
 
             output_1.backward(recv_grad)    # parts in-layer (peças em camada)
+            time.sleep(0.3521)  # Adiciona latência no gradiente
 
             optimizer1.step()
         
@@ -262,10 +264,9 @@ def train():
         p_time = p_finish-p_start
         if e == epochs-1:
             MODE = 3
-            # sf.send_size_n_msg(MODE, s)     # per client ver.
-        else:                                 # per epoch ver.
+        else:                                 
             MODE = 2    # finished test -> start next client's training
-        sf.send_size_n_msg(MODE, s)           # per epoch ver.
+        sf.send_size_n_msg(MODE, s)           
         print("Processing time: ", p_time)
         p_time_list.append(p_time)
 

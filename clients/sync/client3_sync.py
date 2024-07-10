@@ -156,7 +156,8 @@ def train():
 
             output_1 = forward_prop(MODEL, data)
 
-            # SEND ----------- feature data 1 ---------------
+            time.sleep(accuracy)
+            # SEND ----------- feature data 1 ----------------
             # ENVIAR ----------- dados do recurso 1 ---------------
             start_time = process_time()
             sf.send_size_n_msg(output_1, s)
@@ -164,7 +165,6 @@ def train():
             comm_data_size += output_1.element_size() * output_1.nelement()
 
             ### wait for SERVER to calculate... ###
-            ### espere o SERVIDOR calcular... ###
 
             # RECEIVE ------------ feature data 2 -------------
             # RECEBER ------------ dados do recurso 2 -------------
@@ -192,7 +192,8 @@ def train():
             sf.send_size_n_msg(recv_data2.grad, s)
             comm_time += process_time() - start_time
             comm_data_size += recv_data2.grad.element_size() * recv_data2.grad.nelement()
-
+            
+            time.sleep(accuracy)
             # RECEIVE ----------- grad 1 -----------
             # RECEBER ----------- 1ª série -----------
             start_time = process_time()
