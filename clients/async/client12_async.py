@@ -1,7 +1,3 @@
-'''
-Shared Split learning (Client 12 -> Server -> Client 12)
-Client 12 program
-'''
 import gc
 from glob import escape
 import os
@@ -31,57 +27,7 @@ sys.path.append(file_path)
 
 import ml_model
 import socket_fun as sf
-
-class AsynchronousSplitLearning:
-    def __init__(self, client_models, server_model, num_epoch, num_batch, K, lthred):
-        self.state = 'A'
-        self.client_models = client_models
-        self.server_model = server_model
-        self.num_epoch = num_epoch
-        self.num_batch = num_batch
-        self.K = K
-        self.lthred = lthred
-        self.total_loss = 0
-
-    def split_forward(self, state, data, target, criterion):
-        if state == 'C':
-            act, y_star = None, None
-        else:
-            act = sum(client_model(data) for client_model in self.client_models) / len(self.client_models)
-            y_star = target
-        outputs = self.server_model(act)
-        loss = criterion(outputs, target)
-        return loss
-
-    def split_backward(self, state, loss, optimizer):
-        loss.backward()
-        optimizer.step()
-
-    def update_state(self, total_loss):
-        last_update_loss = total_loss / (self.num_batch * self.K)
-        delta_loss = last_update_loss - (total_loss / (self.num_batch * self.K))
-        if delta_loss <= self.lthred:
-            self.state = 'A'
-        else:
-            self.state = 'B' if self.state == 'A' else 'C'
-        return self.state
-
-    def train(self, train_loader, criterion, optimizer, latencies, delta_t, error_rate, device):
-        for epoch in range(1, self.num_epoch + 1):
-            total_loss = 0
-            for client in range(1, self.K + 1):
-                for batch_idx, (data, target) in enumerate(train_loader):
-                    data, target = data.to(device), target.to(device)
-                    optimizer.zero_grad()
-
-                    latency, latency_val = introduce_latency(latencies, delta_t)
-                    if latency is None:
-                        continue
-
-                    loss = self.split_forward(self.state, data, target, criterion)
-                    total_loss += loss.item()
-                    self.split_backward(self.state, loss, optimizer)
-            self.state = self.update_state(total_loss)
+from asynchronous import AsynchronousSplitLearning  # Importe a classe do novo arquivo
 
 ### global variable
 ### variável global
@@ -90,7 +36,7 @@ MODE = 0    # 0->train, 1->test
 
 BATCH_SIZE = 128
 
-print(" ------ CLIENT 12 - ASYNC ------")
+print(" ------ CLIENT 1 - ASYNC ------")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # device = torch.device('cpu')
 print("device: ", device)
@@ -104,13 +50,6 @@ transform = transforms.Compose([
 
 # download dataset
 trainset = torchvision.datasets.MNIST(root=root, download=True, train=True, transform=transform)
-# if you want to divide dataset, remove comments below.
-# se você deseja dividir o conjunto de dados, remova os comentários abaixo.
-# indices = np.arange(len(trainset))
-# train_dataset = torch.utils.data.Subset(
-#     trainset, indices[0:20000]
-# )
-# trainset = train_dataset
 testset = torchvision.datasets.MNIST(root=root, download=True, train=False, transform=transform)
 
 print("trainset_len: ", len(trainset))
@@ -143,6 +82,7 @@ w = 'start communication'
 s.sendall(w.encode())
 print("sent request to a server")
 dammy = s.recv(4)
+print ("aqui")
 
 # ------------------ start training -----------------
 # ------------------ comece a treinar -----------------
@@ -162,12 +102,6 @@ optimizer2 = optim.SGD(mymodel2.parameters(), lr=lr, momentum=0.9, weight_decay=
 comm_time = 0
 comm_data_size = 0
 
-def introduce_latency(latencies, delta_t):
-    # Função simulada de latência
-    latency = np.random.choice(latencies)
-    if latency > delta_t:
-        return None, latency
-    return latency, None
 
 def train():
     global comm_time, comm_data_size
@@ -187,7 +121,7 @@ def train():
 
         mymodel1.train()
         mymodel2.train()
-        asl.train(trainloader, criterion, optimizer1, latencies, delta_t, error_rate, device)
+        asl.train(trainloader, criterion, optimizer1, device)
         
         mymodel1.eval()
         mymodel2.eval()
@@ -206,14 +140,18 @@ def train():
 
                 # SEND --------- feature data 1 -----------
                 start_time = process_time()
+                print("1 - Sending data to server...")
                 sf.send_size_n_msg(output, s)
+                print("2 - Data sent to server successfully")
                 comm_time += process_time() - start_time
                 comm_data_size += output.element_size() * output.nelement()
 
                 ### wait for the server...
                 # RECEIVE ----------- feature data 2 ------------
                 start_time = process_time()
+                print("3- Waiting to receive data from server...")
                 recv_data2 = sf.recv_size_n_msg(s)
+                print("4 - Received data from server successfully")
                 comm_time += process_time() - start_time
                 comm_data_size += recv_data2.element_size() * recv_data2.nelement()
 
@@ -248,7 +186,7 @@ def train():
 
         if e == epochs - 1:
             s.close()
-            print("Finished the socket connection(CLIENT 12)")
+            print("Finished the socket connection(CLIENT 3)")
 
     return train_loss_list, train_acc_list, val_loss_list, val_acc_list, p_time_list, comm_time, comm_data_size
 
@@ -260,7 +198,7 @@ def write_to_csv(train_loss_list, train_acc_list, val_loss_list, val_acc_list, p
     csv_writer = csv.writer(f)
 
     result = []
-    result.append('client 12')
+    result.append('client 3')
     result.append(train_loss_list)
     result.append(train_acc_list)
     result.append(val_loss_list)
@@ -276,4 +214,3 @@ def write_to_csv(train_loss_list, train_acc_list, val_loss_list, val_acc_list, p
 if __name__ == '__main__':
     train_loss_list, train_acc_list, val_loss_list, val_acc_list, p_time_list, comm_time, comm_data_size = train()
     write_to_csv(train_loss_list, train_acc_list, val_loss_list, val_acc_list, p_time_list, comm_time, comm_data_size)
-

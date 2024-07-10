@@ -1,7 +1,3 @@
-'''
-Shared Split learning (Client 1 -> Server -> Client 1)
-Client 1 program
-'''
 import gc
 from glob import escape
 import os
@@ -45,6 +41,14 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # device = torch.device('cpu')
 print("device: ", device)
 
+# Argumento de linha de comando para accuracy
+if len(sys.argv) < 2:
+    print("Uso: client_sync.py <accuracy>")
+    sys.exit(1)
+
+accuracy = float(sys.argv[1])
+print(f"Accuracy recebido: {accuracy}")
+
 #MNIST
 root = './datasets/mnist_data'
 transform = transforms.Compose([
@@ -54,13 +58,6 @@ transform = transforms.Compose([
 
 # download dataset
 trainset = torchvision.datasets.MNIST(root=root, download=True, train=True, transform=transform)
-# if you want to divide dataset, remove comments below.
-# se você deseja dividir o conjunto de dados, remova os comentários abaixo.
-# indices = np.arange(len(trainset))
-# train_dataset = torch.utils.data.Subset(
-#     trainset, indices[0:20000]
-# )
-# trainset = train_dataset
 testset = torchvision.datasets.MNIST(root=root, download=True, train=False, transform=transform)
 
 print("trainset_len: ", len(trainset))
@@ -132,7 +129,7 @@ def train():
 
         mymodel1.train()
         mymodel2.train()
-        asl.train(trainloader, criterion, optimizer1, latencies, delta_t, error_rate, device)
+        asl.train(trainloader, criterion, optimizer1, device)
         
         mymodel1.eval()
         mymodel2.eval()
@@ -148,7 +145,8 @@ def train():
                 data = data.to(device)
                 labels = labels.to(device)
                 output = mymodel1(data)
-
+                
+                time.sleep(accuracy)
                 # SEND --------- feature data 1 -----------
                 start_time = process_time()
                 print("1 - Sending data to server...")
@@ -157,6 +155,7 @@ def train():
                 comm_time += process_time() - start_time
                 comm_data_size += output.element_size() * output.nelement()
 
+                time.sleep(accuracy)
                 ### wait for the server...
                 # RECEIVE ----------- feature data 2 ------------
                 start_time = process_time()
@@ -225,5 +224,3 @@ def write_to_csv(train_loss_list, train_acc_list, val_loss_list, val_acc_list, p
 if __name__ == '__main__':
     train_loss_list, train_acc_list, val_loss_list, val_acc_list, p_time_list, comm_time, comm_data_size = train()
     write_to_csv(train_loss_list, train_acc_list, val_loss_list, val_acc_list, p_time_list, comm_time, comm_data_size)
-
-

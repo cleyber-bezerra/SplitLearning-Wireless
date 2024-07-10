@@ -38,6 +38,30 @@ for pasta in pastas:
         os.makedirs(pasta)
         print(f"Pasta '{pasta}' criada.")
 
+
+# OPEN CLIENTS
+df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
+client_in = df['Flow ID'].tolist()
+latency_in = df['Latency (s)'].tolist()
+
+FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
+
+if FLAG == 1:
+    filtered_clients = [client_in[i] for i in range(len(latency_in)) if latency_in[i] <= 0.40 and latency_in[i] != float('inf')]
+    filtered_clients = [latency_in[i] for i in range(len(latency_in)) if latency_in[i] <= 0.40 and latency_in[i] != float('inf')]
+    latency=filtered_latency
+    clients = filtered_clients
+else:
+    filtered_clients = [client_in[i] for i in range(len(latency_in)) if latency_in[i] != float('inf')]
+    filtered_latency = [latency_in[i] for i in range(len(latency_in)) if latency_in[i] != float('inf')]
+    latency=filtered_latency
+    clients = filtered_clients
+
+print("Number Clients: ", len(clients))
+print("Clients: ", clients)
+print("Number Clients: ", latency)
+
+
 # -------------------- connection ----------------------
 user_info = []
 host = '127.0.0.1'
@@ -45,30 +69,9 @@ port = 19089
 ADDR = (host, port)
 s = socket.socket()
 s.bind(ADDR)
-USER = 20 # número de clientes a serem atendidos simultaneamente.
+USER = len(clients) # número de clientes a serem atendidos simultaneamente do CSV.
 s.listen(USER)
 print("Waiting clients...")
-
-# OPEN CLIENTS
-df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
-client_sequence = df['Flow ID'].tolist()
-accuracy_entrada = df['Latency (s)'].tolist()
-
-FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
-
-if FLAG == 1:
-    filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
-    filtered_clients = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
-    accuracies=filtered_accuracy
-    clients = filtered_clients
-else:
-    filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
-    filtered_accuracy = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
-    accuracies=filtered_accuracy
-    clients = filtered_clients
-
-print(clients)
-print(accuracies)
 
 python_interpreter = "python3"
 '''
@@ -77,7 +80,7 @@ for client in clients:
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path])
 '''
 
-for client, accuracy in zip(clients, accuracies):
+for client, accuracy in zip(clients, latency):
     script_path = f"./clients/sync/client{client}_async.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path, str(accuracy)])
 

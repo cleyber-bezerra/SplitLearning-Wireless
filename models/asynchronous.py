@@ -34,7 +34,7 @@ class AsynchronousSplitLearning:
             self.state = 'B' if self.state == 'A' else 'C'
         return self.state
 
-    def train(self, train_loader, criterion, optimizer, latencies, delta_t, error_rate, device):
+    def train(self, train_loader, criterion, optimizer, device):
         for epoch in range(1, self.num_epoch + 1):
             total_loss = 0
             for client in range(1, self.K + 1):
@@ -42,19 +42,7 @@ class AsynchronousSplitLearning:
                     data, target = data.to(device), target.to(device)
                     optimizer.zero_grad()
 
-                    latency, latency_val = self.introduce_latency(latencies, delta_t)
-                    if latency is None:
-                        continue
-
                     loss = self.split_forward(self.state, data, target, criterion)
                     total_loss += loss.item()
                     self.split_backward(self.state, loss, optimizer)
             self.state = self.update_state(total_loss)
-
-    @staticmethod
-    def introduce_latency(latencies, delta_t):
-        # Função simulada de latência
-        latency = np.random.choice(latencies)
-        if latency > delta_t:
-            return None, latency
-        return latency, None

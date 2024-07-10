@@ -42,24 +42,24 @@ for pasta in pastas:
 
 # OPEN CLIENTS
 df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
-client_sequence = df['Flow ID'].tolist()
-accuracy_entrada = df['Latency (s)'].tolist()
+client_in = df['Flow ID'].tolist()
+latency_in = df['Latency (s)'].tolist()
 
 FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
 
 if FLAG == 1:
-    filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
-    filtered_accuracy = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] <= 0.40 and accuracy_entrada[i] != float('inf')]
+    filtered_clients = [client_in[i] for i in range(len(latency_in)) if latency_in[i] <= 0.40 and latency_in[i] != float('inf')]
+    filtered_latency = [latency_in[i] for i in range(len(latency_in)) if latency_in[i] <= 0.40 and latency_in[i] != float('inf')]
     clients = filtered_clients
-    accuracies=filtered_accuracy
+    latency=filtered_latency
 else:
-    filtered_clients = [client_sequence[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
-    filtered_accuracy = [accuracy_entrada[i] for i in range(len(accuracy_entrada)) if accuracy_entrada[i] != float('inf')]
+    filtered_clients = [client_in[i] for i in range(len(latency_in)) if latency_in[i] != float('inf')]
+    filtered_latency = [latency_in[i] for i in range(len(latency_in)) if latency_in[i] != float('inf')]
     clients = filtered_clients
-    accuracies=filtered_accuracy
+    latency=filtered_latency
 
-print(clients, len(clients))
-print(accuracies)
+print(clients, "Number Clients: ", len(clients))
+print(latency)
 
 
 # -------------------- connection ----------------------
@@ -83,7 +83,7 @@ for client in clients:
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path])
 '''
 
-for client, accuracy in zip(clients, accuracies):
+for client, accuracy in zip(clients, latency):
     script_path = f"./clients/sync/client{client}_sync.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path, str(accuracy)])
 
