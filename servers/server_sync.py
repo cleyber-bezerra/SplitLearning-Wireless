@@ -78,7 +78,7 @@ print("Waiting clients...")
 
 python_interpreter = "python3"
 
-for client, accuracy in zip(clients, delays):
+for client, delay in zip(clients, delays):
     script_path = f"./clients/sync/client{client}_sync.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path, str(delay)])
 

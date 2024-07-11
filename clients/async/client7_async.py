@@ -31,7 +31,7 @@ DAM = b'ok!'    # dammy
 MODE = 0    # 0->train, 1->test
 BATCH_SIZE = 128
 
-print(" ------ CLIENT 8 ------")
+print(" ------ CLIENT 7 ------")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("device: ", device)
 
@@ -243,7 +243,7 @@ async def train():
 
         if e == epochs-1: 
             s.close()
-            print("Conexão de soquete finalizada (CLIENTE 8)")
+            print("Conexão de soquete finalizada (CLIENTE 7)")
 
     return train_loss_list, train_acc_list, val_loss_list, val_acc_list, p_time_list, comm_time, comm_data_size
 
@@ -261,7 +261,7 @@ def write_to_csv(train_loss_list, train_acc_list, val_loss_list, val_acc_list, p
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         result = [
-            'client 8',
+            'client 7',
             train_loss_list,
             train_acc_list,
             val_loss_list,

@@ -94,7 +94,7 @@ plt.xlim(0,)
 plt.ylim(0,)
 plt.grid()
 plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
-plt.savefig('./images/figure6.png')
+plt.savefig('./images/figure6a.png')
 
 plt.figure()
 for i in range(USER):
@@ -112,5 +112,5 @@ plt.xlim(0,)
 plt.ylim(0,)
 plt.grid()
 plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
-plt.savefig('./images/figure7.png')
+plt.savefig('./images/figure7a.png')
 

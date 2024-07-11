@@ -1,43 +1,115 @@
+from matplotlib import pyplot as plt
+import csv
 import pandas as pd
-import matplotlib.pyplot as plt
 
-# Carregar os dados do arquivo CSV
-file_path = './csv/ia/result_train_sync.csv'
-data = pd.read_csv(file_path)
+train_loss, train_acc, val_loss, val_acc = [], [], [], []
+p_time = []
+cal_times = []
 
-# Convertendo as colunas que estão como strings de listas para valores únicos
-data['Validation Accuracy'] = data['Validation Accuracy'].str.strip('[]').astype(float)
-data['Comm Time'] = data['Comm Time'].astype(float)
+# Caminho para o arquivo CSV
+file = './csv/ia/result_train_sync.csv'
 
-# Gerar o gráfico de Validation Accuracy por Client
-plt.figure(figsize=(10, 6))
-plt.plot(data['Client'], data['Validation Accuracy'], marker='o', linestyle='-')
-plt.xlabel('Client')
-plt.ylabel('Validation Accuracy')
-plt.title('Validation Accuracy por Client')
-plt.grid(True)
-plt.xticks(rotation=45)
-plt.tight_layout()
+# Abrir o arquivo e contar as linhas
+with open(file, 'r') as f:
+    USER = sum(1 for line in f)
 
-# Adicionar rótulos aos pontos (Validation Accuracy)
-for x, y in zip(data['Client'], data['Validation Accuracy']):
-    plt.text(x, y, f'{y:.2f}', ha='center', va='bottom')
+# Inicialize as listas antes de usá-las
+train_loss = []
+train_acc = []
+val_loss = []
+val_acc = []
+p_time = []
 
-plt.show()
+def make_list_from_csv(file, USER):
+    with open(file, newline='') as f:
+        csvreader = csv.reader(f)
+        content = [row for row in csvreader]  # [ [row],[row],[row],[row] ]
+        
+        # Verificar se o número de linhas no CSV é suficiente
+        if len(content) < USER:
+            raise ValueError("O arquivo CSV não tem linhas suficientes para o valor de USER fornecido.")
+        
+        for i, row in enumerate(content):
+            if i >= USER:
+                break
+            try:
+                train_loss.append(row[1])
+                train_acc.append(row[2])
+                val_loss.append(row[3])
+                val_acc.append(row[4])
+                p_time.append(row[5])
+            except IndexError:
+                print(f"Erro ao acessar índices na linha {i+1}. Certifique-se de que todas as linhas tenham o número correto de colunas.")
+                break
 
-# Gerar o gráfico de Comm Time por Client
-plt.figure(figsize=(10, 6))
-plt.plot(data['Client'], data['Comm Time'], marker='o', linestyle='-')
-plt.xlabel('Client')
-plt.ylabel('Comm Time')
-plt.title('Comm Time por Client')
-plt.grid(True)
-plt.xticks(rotation=45)
-plt.tight_layout()
+make_list_from_csv(file, USER)
 
-# Adicionar rótulos aos pontos (Comm Time)
-for x, y in zip(data['Client'], data['Comm Time']):
-    plt.text(x, y, f'{y:.2f}', ha='center', va='bottom')
+for i in range(min(USER, len(val_acc))):
+    try:
+        val_acc[i] = eval(val_acc[i])
+        val_acc[i].insert(0, 0.0)
+    except (IndexError, SyntaxError, NameError) as e:
+        print(f"Erro ao processar val_acc na posição {i+1}: {e}")
+        break
 
-plt.show()
+epoch_over_eighty = []
+time_over_eighty = []
+for user in p_time:
+    tmp = 0.0
+    user = eval(user)
+    cal_time = []
+    cal_time.append(0.0)
+    for time in user:
+        tmp += float(time)
+        cal_time.append(tmp)
+    cal_times.append(cal_time)
 
+# Verificar o tamanho das listas antes de acessar os índices
+for i in range(USER):
+    if len(cal_times[i]) > USER:
+        print(f"client {i+1} processing time: ", cal_times[i][USER])
+    else:
+        print(f"Erro: client {i+1} não tem {USER} elementos em cal_times")
+
+# Verificar o tamanho das listas antes de acessar os índices
+for i in range(USER):
+    if len(val_acc[i]) > 0:
+        print(f"Max acc of client {i+1}: ", max(val_acc[i]))
+    else:
+        print(f"Erro: client {i+1} não tem elementos em val_acc")
+
+plt.figure()
+for i in range(USER):
+    if len(cal_times[i]) > 0 and len(val_acc[i]) > 0:
+        plt.plot(cal_times[i], val_acc[i], linewidth=2, linestyle='-', label=f'Client {i+1}')
+        for x, y in zip(cal_times[i], val_acc[i]):
+            plt.annotate(f'({x:.1f}, {y:.2f})', (x, y), textcoords="offset points", xytext=(0,10), ha='center')
+
+plt.legend(fontsize=14)
+plt.title('Processing time [s] vs Accuracy', fontsize=14)
+plt.xlabel('Processing time [s]', fontsize=14)
+plt.ylabel('Accuracy', fontsize=14)
+plt.tick_params(labelsize=14)
+plt.xlim(0,)
+plt.ylim(0,)
+plt.grid()
+plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
+plt.savefig('./images/figure6s.png')
+
+plt.figure()
+for i in range(USER):
+    if len(val_acc[i]) > 0:
+        plt.plot(range(len(val_acc[i])), val_acc[i], linewidth=2, linestyle='-', label=f'Client {i+1}')
+        for x, y in zip(range(len(val_acc[i])), val_acc[i]):
+            plt.annotate(f'({x}, {y:.2f})', (x, y), textcoords="offset points", xytext=(0,10), ha='center')
+
+plt.legend(fontsize=14)
+plt.title('Epoch vs Accuracy', fontsize=14)
+plt.xlabel('Epoch', fontsize=14)
+plt.ylabel('Accuracy', fontsize=14)
+plt.tick_params(labelsize=14)
+plt.xlim(0,)
+plt.ylim(0,)
+plt.grid()
+plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
+plt.savefig('./images/figure7s.png')

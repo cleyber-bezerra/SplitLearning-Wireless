@@ -42,7 +42,7 @@ for pasta in pastas:
 # OPEN CLIENTS
 df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
 client_in = df['Flow ID'].tolist()
-delay_in = df['Latency (s)'].tolist()
+delay_in = df['Delay (s)'].tolist()
 
 FLAG = 0 # 0 - todos com latência, 1 - filtro de latencias
 
@@ -65,18 +65,19 @@ print("Number Clients: ", delays)
 # -------------------- connection ----------------------
 user_info = []
 host = '127.0.0.1'
-port = 19089
+port = 19090
 ADDR = (host, port)
 s = socket.socket()
 s.bind(ADDR)
 USER = len(clients) # número de clientes a serem atendidos simultaneamente do CSV.
+
 s.listen(USER)
 print("Waiting clients...")
 
 python_interpreter = "python3"
 
 for client, delay in zip(clients, delays):
-    script_path = f"./clients/sync/client{client}_async.py"
+    script_path = f"./clients/async/client{client}_async.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, script_path, str(delay)])
 
 for num_user in range(USER):
@@ -198,6 +199,7 @@ def train(user):
     print("Total Communication Time: ", total_comm_time)
     print("Total Communication Data: ", total_comm_data, "bytes")
 
+  
     #gráficos de Net(Simulator NS3)
     plot_acc_file_path = f"./plots/plot_net_result.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, plot_acc_file_path])
@@ -210,11 +212,6 @@ def train(user):
     plot_acc_file_path = f"./plots/plot_net_group.py"
     subprocess.Popen(['gnome-terminal', '--', python_interpreter, plot_acc_file_path])
     '''
-# CHAMADA DIRETA DO ARQUIVO    
-'''
-if __name__ == '__main__':
-    train(user_info[0])
-'''
 
 # ACESSO PELO ARQUIVO RUN.PY
 def main():
@@ -222,4 +219,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

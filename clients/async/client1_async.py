@@ -67,7 +67,7 @@ mymodel2 = ml_model.ml_model_out(NUM_CLASSES=10).to(device)
 
 # -------------------- Conexão ----------------------
 host = '127.0.0.1'
-port = 19089
+port = 19090
 ADDR = (host, port)
 
 # Conectar ao servidor

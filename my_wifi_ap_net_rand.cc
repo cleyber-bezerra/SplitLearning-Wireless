@@ -30,11 +30,11 @@ int main(int argc, char *argv[])
     RngSeedManager::SetRun(1);  // Ensure same seed to guarantee same results each execution
 
     // Simulation parameters
-    uint32_t nWifi = 10;
+    uint32_t nWifi = 3;
     double simulationTime = 10.0; // seconds
     double txPower = 50.0;         // dBm     (10, 30, 50)
     double stApDistance = 50.0;    // meters  (10, 50, 100)
-    double lossExponent = 3; 	   // dB 2, 3, 4 for Low, moderate $ high exponents for low loss, moderate loss $ high losses
+    double lossExponent = 4.0; 	   // dB 2, 3, 4 for Low, moderate $ high exponents for low loss, moderate loss $ high losses
     double referenceLoss = 40.0;   // dB Varies between 40 and 100 or higher, 40dB for Wifi environment with minimal obstacles and low interference
     
     // Command line arguments
