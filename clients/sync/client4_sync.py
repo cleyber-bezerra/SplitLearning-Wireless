@@ -156,7 +156,7 @@ def train():
 
             output_1 = forward_prop(MODEL, data)
 
-            time.sleep(delay)
+            #time.sleep(delay)
             # SEND ----------- feature data 1 ----------------
             # ENVIAR ----------- dados do recurso 1 ---------------
             start_time = process_time()
@@ -193,7 +193,7 @@ def train():
             comm_time += process_time() - start_time
             comm_data_size += recv_data2.grad.element_size() * recv_data2.grad.nelement()
             
-            time.sleep(delay)
+            #time.sleep(delay)
             # RECEIVE ----------- grad 1 -----------
             # RECEBER ----------- 1ª série -----------
             start_time = process_time()

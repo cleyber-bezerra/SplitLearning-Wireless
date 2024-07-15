@@ -5,11 +5,11 @@ import seaborn as sns
 # Ler o arquivo CSV
 df = pd.read_csv('./csv/ns3/simulator_ns3.csv')
 
-# Filtrar as linhas onde "Latency (s)" não é "inf"
-df = df[df['Latency (s)'] != 'inf']
+# Filtrar as linhas onde "Delay (s)" não é "inf"
+df = df[df['Delay (s)'] != 'inf']
 
 # Converter as colunas para os tipos apropriados, se necessário
-df['Latency (s)'] = pd.to_numeric(df['Latency (s)'])
+df['Delay (s)'] = pd.to_numeric(df['Delay (s)'])
 df['Packet Loss Ratio (%)'] = pd.to_numeric(df['Packet Loss Ratio (%)'])
 df['Throughput (Mbps)'] = pd.to_numeric(df['Throughput (Mbps)'])
 df['Energy Consumed (J)'] = pd.to_numeric(df['Energy Consumed (J)'])
@@ -17,16 +17,16 @@ df['Flow ID'] = df['Flow ID'].astype(int)  # Converter Flow ID para inteiro
 
 # Gráfico 1: Latência em relação ao Flow ID
 plt.figure(figsize=(10, 6))
-ax1 = sns.lineplot(data=df, x='Flow ID', y='Latency (s)', marker='o')
-plt.title('Latency in relation to the Client ID - Network')
+ax1 = sns.lineplot(data=df, x='Flow ID', y='Delay (s)', marker='o')
+plt.title('Delay in relation to the Client ID - Network')
 plt.xlabel('Client ID')
-plt.ylabel('Latency (s)')
-plt.legend(['Latency (s)'])
+plt.ylabel('Delay (s)')
+plt.legend(['Delay (s)'])
 plt.grid(True)
 
 # Adicionar anotações
 for i, row in df.iterrows():
-    ax1.annotate(f"{row['Latency (s)']:.2f}", (row['Flow ID'], row['Latency (s)']), textcoords="offset points", xytext=(0,10), ha='center')
+    ax1.annotate(f"{row['Delay (s)']:.2f}", (row['Flow ID'], row['Delay (s)']), textcoords="offset points", xytext=(0,10), ha='center')
 
 # Definir rótulos de eixo x como inteiros
 ax1.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{int(x)}'))
