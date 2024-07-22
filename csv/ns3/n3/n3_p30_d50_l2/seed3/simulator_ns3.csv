@@ -1,0 +1,4 @@
+Client,Flow ID,Source Address,Destination Address,Tx Packets,Rx Packets,Throughput (Mbps),Delay (s),Packet Loss Ratio (%),Transmission Time (s),Energy Consumed (J)
+2,1,10.1.3.2,10.1.3.4,1024,959,0.855228,0.465074,6.347656,1.237278,12.858705
+1,3,10.1.3.1,10.1.3.4,1024,1000,0.891791,0.443502,2.343750,1.220830,12.859620
+3,5,10.1.3.3,10.1.3.4,1024,3,0.002675,0.210601,99.707031,0.211374,12.785903

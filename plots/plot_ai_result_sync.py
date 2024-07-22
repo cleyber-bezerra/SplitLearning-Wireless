@@ -1,26 +1,20 @@
 from matplotlib import pyplot as plt
 import csv
-import pandas as pd
 
+# Inicialize as listas antes de usá-las
 train_loss, train_acc, val_loss, val_acc = [], [], [], []
 p_time = []
 cal_times = []
 
 # Caminho para o arquivo CSV
-file = './csv/ia/result_train_sync.csv'
+file = '/mnt/data/result_train_sync.csv'
 
-# Abrir o arquivo e contar as linhas
+# Contar as linhas do arquivo CSV
 with open(file, 'r') as f:
     USER = sum(1 for line in f)
 
-# Inicialize as listas antes de usá-las
-train_loss = []
-train_acc = []
-val_loss = []
-val_acc = []
-p_time = []
-
 def make_list_from_csv(file, USER):
+    global train_loss, train_acc, val_loss, val_acc, p_time
     with open(file, newline='') as f:
         csvreader = csv.reader(f)
         content = [row for row in csvreader]  # [ [row],[row],[row],[row] ]
@@ -44,6 +38,7 @@ def make_list_from_csv(file, USER):
 
 make_list_from_csv(file, USER)
 
+# Processar val_acc
 for i in range(min(USER, len(val_acc))):
     try:
         val_acc[i] = eval(val_acc[i])
@@ -52,13 +47,11 @@ for i in range(min(USER, len(val_acc))):
         print(f"Erro ao processar val_acc na posição {i+1}: {e}")
         break
 
-epoch_over_eighty = []
-time_over_eighty = []
+# Processar p_time
 for user in p_time:
     tmp = 0.0
     user = eval(user)
-    cal_time = []
-    cal_time.append(0.0)
+    cal_time = [0.0]
     for time in user:
         tmp += float(time)
         cal_time.append(tmp)
@@ -78,6 +71,7 @@ for i in range(USER):
     else:
         print(f"Erro: client {i+1} não tem elementos em val_acc")
 
+# Plotar Processing time [s] vs Accuracy
 plt.figure()
 for i in range(USER):
     if len(cal_times[i]) > 0 and len(val_acc[i]) > 0:
@@ -96,6 +90,7 @@ plt.grid()
 plt.subplots_adjust(left=0.140, right=0.980, bottom=0.130, top=0.870)
 plt.savefig('./images/figure6s.png')
 
+# Plotar Epoch vs Accuracy
 plt.figure()
 for i in range(USER):
     if len(val_acc[i]) > 0:

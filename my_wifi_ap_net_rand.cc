@@ -26,13 +26,13 @@ int main(int argc, char *argv[])
     std::setlocale(LC_ALL, "");
 
     // Set a random seed
-    RngSeedManager::SetSeed(1); // fetch current time: time(0) for Change the seed based on current time
-    RngSeedManager::SetRun(1);  // Ensure same seed to guarantee same results each execution
+    RngSeedManager::SetSeed(5); // fetch current time: time(0) for Change the seed based on current time
+    RngSeedManager::SetRun(5);  // Ensure same seed to guarantee same results each execution
 
     // Simulation parameters
-    uint32_t nWifi = 3;
+    uint32_t nWifi = 5;
     double simulationTime = 10.0; // seconds
-    double txPower = 50.0;         // dBm     (10, 30, 50)
+    double txPower = 30.0;         // dBm     (10, 30, 50)
     double stApDistance = 50.0;    // meters  (10, 50, 100)
     double lossExponent = 4.0; 	   // dB 2, 3, 4 for Low, moderate $ high exponents for low loss, moderate loss $ high losses
     double referenceLoss = 40.0;   // dB Varies between 40 and 100 or higher, 40dB for Wifi environment with minimal obstacles and low interference
