@@ -1,4 +1,4 @@
-# SplitLearning-Async-NS3
+# SplitLearning-Wireless
 
 <p align='center' style="margin-bottom: -4px">Cleyber Bezerra dos Reis<sup>1</sup>, Antonio Oliveira-JR<sup>1</sup></p>
 <p align='center' style="margin-bottom: -4px"><sup>1</sup>Instituto de Informática, Universidade Federal de Goiás</p>
